@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <setParameter name="IIS Web Application Name" value="justiceservive" />
-  <setParameter name="IIS Web Application Pool Name" value="__IisWebApplicationPoolName__" />
-  <setParameter name="Environment" value="__Environment__" />
-  <setParameter name="DJSCaseMgtContext-Web.config Connection String" value="Data Source=DIT-MSSQL01-DV;Initial Catalog=JusticeServices;User ID=JusticeServicesAppId;Password=kidyovr99!!;MultipleActiveResultSets=True" />
-  <setParameter name="ELMAH-Web.config Connection String" value="Data Source=dit-mssql01-dv;Initial Catalog=ELMAH;Persist Security Info=True;User ID=elmahlogger;Password=$reggolelm1" />
-</parameters>
