@@ -1,0 +1,107 @@
+﻿<div class="container">
+    <h4 class="control-label"><i class="fa fa-check-circle"></i> {{ PageHeading }}</h4>
+</div>
+
+<div class="container">
+    <div class="col-sm-7 container">
+        <table st-table="displayed" st-safe-src="rowCollection" ng-model="selectedPredicate" class="sttable table-striped">
+            <thead>
+                <tr>
+                    <td class="col-sm-1">
+                        <button type="button" class="btn btn-xs btn-primary" style="margin-bottom:-20px"
+                                ng-click="CreateNew()" ng-disabled="!EnableNew">
+                            Add
+                        </button>
+                    </td>
+                    <td class="col-sm-offset-8">
+                        <input st-search placeholder="global search" class="input-sm form-control" type="search" />
+                    </td>
+                </tr>
+                <tr>
+                    <th ></th>
+                    <th   style="text-align:center" st-sort="Name">Name</th>
+                    
+                    <th   style="text-align:right" st-sort="Description">Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody ng-hide="isLoading">
+                <tr ng-repeat="row in displayed">
+                    <td class="col-sm-1">
+                        <i style="cursor:pointer" class="fa fa-pencil-square-o" ng-click="OnClick(row)"></i> 
+                    </td>
+                    <td  class="col-sm-5" style="text-align:center;width:80%">{{row.Name}}</td>
+                    <td class="col-sm-5" style="text-align:center;width:80%">{{row.Description}}</td>
+                    <td></td>
+                    <td class="col-sm-1">
+                        <button type="button" class="btn btn-xs btn-primary" style="margin-bottom:5px"
+                                ng-click="OnDeleteClick(row)">
+                            Delete
+                        </button>
+                        </td>
+</tr>
+            </tbody>
+            <tbody ng-show="isLoading">
+                <tr>
+                    <td class="text-center">
+                        <div class="loading-indicator">
+                            <i class="fa fa-refresh fa-spin"></i>  Loading . . .
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-5 container" ng-show="CanShowForm">
+        <br /><br />
+        <form class="form-horizontal" name="frmEntity" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' : submitted && frmEntity.idCode.$invalid }">
+                <label class="col-sm-3 control-label">Name *</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="idCode" placeholder="Name is Required"
+                           ng-model="CurrentSelection.Name" required>
+                    <p ng-show="submitted && frmEntity.idCode.$error.required" class="help-block">
+                        <!--Name is required-->
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Description</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="idDescription" placeholder="Description"
+                           ng-model="CurrentSelection.Description">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Active</label>
+                <div class="col-sm-9">
+                    <input type="radio" name="RelationshipActive" ng-model="CurrentSelection.Active" ng-value="true" /> Yes
+                    &nbsp;
+                    <input type="radio" name="RelationshipActive" ng-model="CurrentSelection.Active" ng-value="false" /> No
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">File</label>
+                <div class="col-sm-9">                    
+                    {{ UploadedFile }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <span class="btn btn-sm btn-primary fileinput-button" ng-disabled="frmEntity.$invalid">
+                        <i class="icon-plus icon-white"></i>
+                        <input type="file" ng-file-select="onFileSelect($files, !frmEntity.$invalid, CurrentSelection)"><span>{{ SubmitButtonText }}</span>
+                    </span>
+
+                    <button type="button" class="btn btn-sm btn-primary" ng-disabled="frmEntity.$invalid || !frmEntity.$dirty" ng-show="CanShowUpdate" ng-click="Update(!frmEntity.$invalid, CurrentSelection)">Update</button>
+                    <button type="button" class="btn btn-sm btn-primary" ng-show="CanShowDelete" ng-click="Delete(CurrentSelection)">Confirm</button>
+                    <button type="button" class="btn btn-sm btn-primary" ng-disabled="!frmEntity.$dirty" ng-show="CanShowReset" ng-click="Reset()">Reset</button>
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="Cancel()">Cancel</button>                    
+                </div>
+                </div>
+                <div class="col-sm-offset-3 col-sm-9">
+                    <span class="alert-warning">* are mandatory</span>
+                </div>
+        </form>
+    </div>
+</div>

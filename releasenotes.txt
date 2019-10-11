@@ -1,0 +1,41 @@
+ _____ ___  _________  _____  _    _  _____ ______  
+|  ___||  \/  || ___ \|  _  || |  | ||  ___|| ___ \ 
+| |__  | .  . || |_/ /| | | || |  | || |__  | |_/ / 
+|  __| | |\/| ||  __/ | | | || |/\| ||  __| |    /  
+| |___ | |  | || |    \ \_/ /\  /\  /| |___ | |\ \  
+\____/ \_|  |_/\_|     \___/  \/  \/ \____/ \_| \_| 
+
+#############
+Empower 1.0.2
+#############
+
+Bugfixes
+--------
+- [cwb api] updated PersonController.cs to check inactive ClientProfile and only check duplicate SSN with a Unique ID (Family member entered with an SSN can cause issue, has not client profile to merge)
+
+Incident/Service Request
+------------------------
+SR1767028  - scenario where duplicate users between systems would not be correctly flagged and merged upon entry
+                                                
+#############
+Empower 1.0.1
+#############
+
+Features
+--------
+- [Juvenile + Adult] Placement Charges (charge code) now search on viewkey/vcccode, heading, statue, and description.
+
+Bugfixes
+--------
+- [all apis] updated Person.cs to null-check SSN on update.
+- [juvenile api] add the 'GetAll' function to apply filter to only show active, juvenile service choices. (juvenile/ServiceProgramCategoryController.cs)
+
+Incident/Service Request
+------------------------
+SR768205  - VIEWKEY search fix (J,A)
+IR1645305 - ServiceProgramCategoryController (J)
+NullSSN (J,A,C)
+#############
+Empower 1.0.0
+#############
+- Initial commit of production code

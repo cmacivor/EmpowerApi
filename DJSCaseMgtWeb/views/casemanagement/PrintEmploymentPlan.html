@@ -1,0 +1,178 @@
+﻿<script>
+    function PrintElem(elem) {
+        $("input").each(function () {
+            $(this).attr("value", $(this).val());
+        });
+        Popup($(elem).html());
+
+    }
+
+    function Popup(data) {
+        //var mywindow = window.open('', '', 'height=400,width=600');
+        var mywindow = window.open('', '', '');
+        mywindow.document.write('<html><head><title></title>');
+        mywindow.document.write('<link rel="stylesheet" type="text/css" media="print" href="styles/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">');
+        mywindow.document.write('<style>input.no-border{border: none;outline: none;}.print-border{border: 1px solid black;padding: 5px;}</style>.print-table{font-size: 14px;}');
+        mywindow.document.write('</head><body >');
+
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close();
+        // necessary for IE >= 10
+        mywindow.focus();
+        // necessary for IE >= 10
+
+        setTimeout(function () {
+            mywindow.print();
+            mywindow.close();
+        }, 20);
+
+        return true;
+    }
+</script>
+<link rel="stylesheet" type="text/css" media="print" href="styles/bootstrap.min.css">
+<form class="form-horizontal" name="frmEmploymentPlan" novalidate readonly style="border:1px  solid black">
+    <div class="container custom-modal-body" tabindex='-1' id="employmentPlanPrint" style="max-height:2000px;width:100%">
+        <div class="modal-header">
+            <h4 class="modal-title">
+                <i class="fa fa-check-circle"></i>
+                COMMUNITY WEALTH BUILDING CASE MANAGEMENT
+                <input type="button" value="Click to Print" class="btn btn-sm btn-primary pull-right hidden-print" onclick="PrintElem('#employmentPlanPrint')" />
+            </h4>
+        </div>
+        <br>
+        <strong class="control-strong pull-left" style="background-color: #d9d9d9">Participant's Profile  Information</strong>
+        <br>
+        <hr />
+        <div class="print-border">
+            <div class="row">
+                <div class="col-xs-6">
+                    <strong>Participant's  Name</strong>
+                    &nbsp;&nbsp;&nbsp;<input type="text" class="no-border" ng-model="currentClientName" readonly />
+                </div>
+                <div class="col-xs-6">
+                    <strong>SSN</strong>
+                    &nbsp;&nbsp;&nbsp;<input type="text" class="no-border" ng-model="ReqClient.SSN" readonly />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-6">
+                    <strong>Gender</strong>
+                    &nbsp;&nbsp;&nbsp;<input type="text" class="no-border" ng-model="ReqClient.Gender" readonly />
+                </div>
+                <div class="col-xs-6">
+                    <strong>Race</strong>
+                    &nbsp;&nbsp;&nbsp;<input type="text" class="no-border" ng-model="Person.Person.Race.Description" readonly />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-6">
+                    <strong>State/VCIN</strong>
+                    &nbsp;&nbsp;&nbsp;<input type="text" class="no-border" ng-model="Person.Person.JTS" readonly />
+                </div>
+                <div class="col-xs-6">
+                    <strong>Current age</strong>
+                    &nbsp;&nbsp;&nbsp;<input type="text" class="no-border" ng-model="Person.Person.CurrentAge" readonly />
+                </div>
+            </div>
+        </div>
+        <br>
+        <hr />
+        <strong class="control-strong pull-left" style="background-color: #d9d9d9">Goals</strong>
+        <br>
+        <hr />
+        <div>
+            <strong>Employment Goal: </strong>
+            <p>{{CurrentPlacementEmployment.EmploymentGoal}}</p>
+        </div>
+        <div>
+            <strong>Education/Training Goal: </strong>
+            <p>{{CurrentPlacementEmployment.EduTrainGoal}}</p>
+        </div>
+        <hr />
+        <strong class="control-strong pull-left" style="background-color: #d9d9d9">Occupational Strength</strong>
+        <br>
+        <hr />
+        <div>
+            <strong>Work Experience: </strong>
+            <p>{{CurrentPlacementEmployment.WorkExperience}}</p>
+        </div>
+        <div>
+            <strong>Strengths: </strong>
+            <p>{{CurrentPlacementEmployment.Strengths}}</p>
+        </div>
+        <hr />
+        <strong class="control-strong pull-left" style="background-color: #d9d9d9">Education and Training Strengths</strong>
+        <br>
+        <hr />
+        <div>
+            <strong>Highest Grade Completed: </strong>
+            <p>{{Person.PersonSupplemental.HighestEducation}}</p>
+        </div>
+        <div>
+            <strong>Additional Training Attended: </strong>
+            <p>{{CurrentPlacementEmployment.AddtlTraining}}</p>
+        </div>
+        <div>
+            <strong>Credentials Received: </strong>
+            <p>{{CurrentPlacementEmployment.Credentials}}</p>
+        </div>
+        <hr />
+        <strong class="control-strong pull-left" style="background-color: #d9d9d9">Barriers and Action Plan</strong>
+        <br>
+        <hr />
+        <div>
+            <strong>Barriers to employment and how they will be addressed: </strong>
+            <p>{{CurrentPlacementEmployment.Barriers}}</p>
+        </div>
+        <strong>Action Plans:</strong>
+
+        <div>
+            <table ng-model="selectedPredicate" class="table-bordered table-condensed print-table" style="font-size:14px">
+                <thead>
+                    <tr>
+                        <th>Objective</th>
+                        <th>Action Steps</th>
+                        <th>Responsible Party</th>
+                        <th>Start Date</th>
+                        <th>Review Date</th>
+                        <th>Projected End Date</th>
+                    </tr>
+                </thead>
+                <tbody ng-hide="isLoading">
+                    <tr ng-repeat="row in CurrentActionPlans| orderBy: '-StartDate'">
+                        <td>{{row.Objective}}</td>
+                        <td>{{row.ActionSteps}}</td>
+                        <td>{{row.ResponsibleParty}}</td>
+                        <td>{{row.StartDate | date: 'MM/dd/yy' }}</td>
+                        <td>{{row.ReviewDate | date: 'MM/dd/yy' }}</td>
+                        <td>{{row.ProjEndDate | date: 'MM/dd/yy' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="visible-print-block">
+            <hr />
+            <h3>Signatures:</h3>
+            <br />
+            Participant:<input type="text" class="no-border" style="border-bottom: 1px solid #000;width:500px;" />
+            &nbsp;
+            Date:<input type="text" class="no-border" style="border-bottom: 1px solid #000; width:80px;" />
+            <br />
+            <br />
+            <br />
+            Career Advisor:<input type="text" class="no-border" style="border-bottom: 1px solid #000;width:500px;" />
+            &nbsp;
+            Date:<input type="text" class="no-border" style="border-bottom: 1px solid #000; width:80px;" />
+        </div>
+        <div class="modal-footer hidden-print">
+
+            <div class="col-sm-offset-8 col-sm-4">
+                <button type="button" class="btn btn-sm btn-primary" ng-click="ClosePrintModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>

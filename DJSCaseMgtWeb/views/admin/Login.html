@@ -1,0 +1,46 @@
+﻿
+   <!--owin authentication--> 
+<div class="container" ng-controller="loginController">
+    <form role="form">
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                &nbsp;
+            </div>
+            <div class="col-md-4 col-sm-4 col-lg-4 formlogin">
+                <img src="images/loginempower.jpg"  style="width:200px;height:100px" ng-show="IsVisibleDJS" commonfunction>
+                <img src="images/loginempowercwb.jpg" style="width:200px;height:100px" ng-show="IsVisibleCWB">
+                <h2 class="form-login-heading">Login</h2>   
+                <!--hello-->               
+                    <input type="text" class="form-control" placeholder="Username" data-ng-model="loginData.userName" autocomplete="username" required autofocus>
+                    <br />
+                        <input type="password" class="form-control" placeholder="Password" data-ng-model="loginData.password" autocomplete="current-password" required>
+                        <br />
+                        <!--<div class="checkbox">
+            <label>
+                <input type="checkbox" data-ng-model="loginData.useRefreshTokens"><strong> Use Refresh Tokens</strong>
+            </label>
+        </div>-->
+                        <button class="btn btn-md btn-primary btn-block" type="submit" data-ng-click="login()">Login</button>
+
+                        <button class="btn btn-md btn-primary btn-block" type="submit" data-ng-click="Reset()">Reset</button>
+                        <!--<button class="btn btn-md btn-primary btn-block" type="submit" data-ng-click="windowslogin()">Windows login</button>-->
+                        <div class="loading-indicator" style="text-align:center" ng-show="isLoading">
+                            <i class="fa fa-refresh fa-spin"></i>  Please wait . . .
+                        </div>
+                        <div data-ng-show="message" class="alert alert-danger" style="margin-top: 5px;">
+                            {{message}}
+                        </div>
+</div>
+
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                &nbsp;
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+
+

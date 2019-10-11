@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebDeploy", "WebDeploy", "{0725EEED-A4AD-4CE9-BD73-3C47AE3CED9D}"
+	ProjectSection(SolutionItems) = preProject
+		WebDeploy\Publish-EmpowerApi-POC.ps1 = Publish-EmpowerApi-POC.ps1
+		WebDeploy\Publish-EmpowerApi.ps1 = WebDeploy\Publish-EmpowerApi.ps1
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DJSCaseMgmtModel", "DJSCaseMgmtModel\DJSCaseMgmtModel.csproj", "{003F2CD2-0747-4827-ADB6-91D9B946A9AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89C53D23-9EE4-462F-B45F-EF0F6041BB04}"
+	ProjectSection(SolutionItems) = preProject
+		releasenotes.txt = releasenotes.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmpowerApi", "EmpowerApi\EmpowerApi.csproj", "{14384E29-A9CE-407F-BEAC-B9073AA41EBC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{003F2CD2-0747-4827-ADB6-91D9B946A9AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{003F2CD2-0747-4827-ADB6-91D9B946A9AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{003F2CD2-0747-4827-ADB6-91D9B946A9AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{003F2CD2-0747-4827-ADB6-91D9B946A9AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14384E29-A9CE-407F-BEAC-B9073AA41EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14384E29-A9CE-407F-BEAC-B9073AA41EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14384E29-A9CE-407F-BEAC-B9073AA41EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14384E29-A9CE-407F-BEAC-B9073AA41EBC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A54F7586-6EB8-487E-A19C-FCE0894CC17F}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 1
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://dit-tfs-p:8080/tfs/defaultcollection
+		SccProjectUniqueName0 = DJSCaseMgmtModel\\DJSCaseMgmtModel.csproj
+		SccProjectName0 = DJSCaseMgmtModel
+		SccAuxPath0 = http://dit-tfs-p:8080/tfs/defaultcollection
+		SccLocalPath0 = DJSCaseMgmtModel
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
+EndGlobal

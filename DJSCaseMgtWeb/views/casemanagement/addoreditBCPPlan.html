@@ -1,0 +1,104 @@
+﻿
+<form class="form-horizontal" name="frmProgressNote" novalidate>
+    <div class="modal-header">
+        <h4 class="modal-title"><i class="fa fa-check-circle"></i> Behavior Change Plan</h4>
+    </div>
+    <div class="container custom-modal-body">
+        <div class="row form-group">
+            <label class="col-sm-3 control-label">Creation Date</label>
+            <div class="col-sm-4">
+                <div class="input-group" ng-class="{ 'has-error': frmBCPPlan.txtBCPlanCreationDate.$invalid }">
+                    <input type="text" class="form-control" name="txtBCPlanCreationDate" placeholder="MM/dd/yyyy" onkeyup="addSlashes(this);"
+                           ng-model="CurrentBCPPlan.BehaviorChangePlan.BCPlanCreationDate" datepicker-popup="MM/dd/yyyy"
+                           is-open="datePicker.instances['BCPlanCreationDate']" close-text="Close"
+                           aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                           datepicker-options="dateOptions" show-button-bar="false" />
+
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="datePicker.open($event, 'BCPlanCreationDate')">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+
+            <p ng-show="frmBCPPlan.txtBCPlanCreationDate.$invalid" class="help-block">
+                Enter a valid Date
+        </div>
+        <div class="row form-group">
+            <label class="col-sm-3 control-label">Client Plan Review Date</label>
+            <div class="col-sm-4">
+                <div class="input-group" ng-class="{ 'has-error': frmBCPPlan.txtClientPlanReviewDate.$invalid }">
+                    <input type="text" class="form-control" name="txtClientPlanReviewDate" placeholder="MM/dd/yyyy" onkeyup="addSlashes(this);"
+                           ng-model="CurrentBCPPlan.BehaviorChangePlan.ClientPlanReviewDate" datepicker-popup="MM/dd/yyyy"
+                           is-open="datePicker.instances['ClientPlanReviewDate']" close-text="Close"
+                           aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                           datepicker-options="dateOptions" show-button-bar="false" />
+
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="datePicker.open($event, 'ClientPlanReviewDate')">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+
+            <p ng-show="frmBCPPlan.txtClientPlanReviewDate.$invalid" class="help-block">
+                Enter a valid Date
+
+            </p>
+        </div>
+        <div class="row form-group">
+            <label class="col-sm-3 control-label">LCSW Plan Review Date</label>
+            <div class="col-sm-4">
+                <div class="input-group" ng-class="{ 'has-error': frmBCPPlan.txtLCSWPlanReviewDate.$invalid }">
+                    <input type="text" class="form-control" name="txtLCSWPlanReviewDate" placeholder="MM/dd/yyyy" onkeyup="addSlashes(this);"
+                           ng-model="CurrentBCPPlan.BehaviorChangePlan.LCSWPlanReviewDate" datepicker-popup="MM/dd/yyyy"
+                           is-open="datePicker.instances['LCSWPlanReviewDate']" close-text="Close"
+                           aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                           datepicker-options="dateOptions" show-button-bar="false" />
+
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="datePicker.open($event, 'LCSWPlanReviewDate')">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+                <p ng-show="frmBCPPlan.txtLCSWPlanReviewDate.$invalid" class="help-block">
+                    Enter a valid Date
+            </div>
+            </div>
+        <div class="row form-group">
+            <label class="col-sm-3 control-label">Case Manager</label>
+            <div class="col-sm-4">
+                <select class="form-control btn btn-default dropdown-toggle"
+                        ng-model="CurrentBCPPlan.BehaviorChangePlan.Counselor"
+                        ng-mouseover="GenerateToolTip(CurrentBCPPlan.BehaviorChangePlan.Counselor, 'Counselor')"
+                        tooltip-placement="bottom" tooltip-special="{{ FormattedCounselorName }}"
+                        ng-options="item as (item.LastName + ',' + item.FirstName) for item in AllCounselors|orderBy:'LastName'  track by item.ID">
+                    <option value="">Select Case Manager</option>
+                </select>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="col-sm-3 control-label">Comments</label>
+            <div class="col-sm-9">
+                <textarea type="text" class="form-control" id="dtNextCourt" placeholder="Comments"
+                          rows="4" style="resize:none" ng-model="CurrentBCPPlan.BehaviorChangePlan.Comments"></textarea>
+            </div>
+        </div>
+
+            <div class="modal-footer">
+                <div class="col-sm-3">
+                    <span class="alert-warning">* are mandatory</span>
+                </div>
+                <div class="col-sm-offset-4 col-sm-5">
+                    <button type="submit" class="btn btn-sm btn-primary" ng-disabled="frmProgressNote.$invalid || !frmProgressNote.$dirty" ng-click="CreateOrUpdate(!frmProgressNote.$invalid, ProgressNote)">{{ SubmitButtonText }}</button>
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="Reset()">Reset</button>
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="CloseProgressNote()">Cancel</button>
+                </div>
+            </div>
+        
+    </div>
+            
+</form>

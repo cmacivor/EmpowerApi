@@ -1,0 +1,112 @@
+﻿<div class="container" ng-controller="ClientSearchController">
+    <div class="container">
+        <h4><i class="fa fa-search"></i> Search Client Profiles </h4><br />
+        <p>Please search for an existing Client Profile, before creating a new one.</p>
+        <form class="form-inline" role="form" name="frmClientSearch">
+            <div class="form-group">
+                <label for="lastname">Name</label>
+                <input type="text" class="form-control" id="lastname" placeholder="Enter Last Name"
+                       ng-model="entity.lastName" ng-required="!entity.firstName">
+                <input type="text" class="form-control" id="firstname" placeholder="Enter First Name"
+                       ng-model="entity.firstName" ng-required="!entity.lastName">
+            </div>
+            <button type="submit" class="btn btn-sm btn-primary" ng-click="Search(entity)" ng-disabled="frmClientSearch.$invalid">Search</button>
+
+            <button type="button" class="btn btn-sm btn-primary" ng-click="ClearSearch(entity)">Clear Search</button>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="Search21plus()" ng-show="super" ng-model="entity.firstName">Search21plus</button>
+         
+
+            <!--<button type="button" class="btn btn-sm btn-primary" ng-click="UpdateAllUniqueIDs()">Update Unique IDs</button>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="UpdateAllSSNs()">ssnsencryption</button>-->
+            <button type="button" class="btn btn-sm btn-primary" ng-click="CreateNew()" ng-show="CanShowNew ">Add New Profile</button>
+
+            <label ng-show="CanShowNew" style="float:right"> Found {{ rowCount }} matching Profiles</label>
+            <!--<div ng-repeat="f in faq">
+                {{f.ID}}-{{f.UserName}}  
+            </div>-->
+        </form>
+    </div>
+
+    <br />
+    <div class="container" ng-show="hasData">
+        <table st-table="displayed" st-safe-src="rowCollection" class="sttable table-striped search-table">
+            <thead ng-show="CanShowTitle">
+                <tr>
+                    <th></th>
+                    <th  st-sort="LastName">Last Name</th>
+                    <th  st-sort="FirstName">First Name</th>
+                    <th  st-sort="MiddleName">MiddleName</th>
+                    <th  st-sort="JTS">JTS #</th>
+                    <th  st-sort="SSN">SSN</th>
+                    <th  st-sort="DOB">Birth Date</th>
+                    <th style="text-align:center" st-sort="Gender">Gender</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <!--ISR 1019-->
+            <thead ng-show="CanShowTitleAdult">
+                <tr>
+                    <th></th>
+                    <th st-sort="LastName">Last Name</th>
+                    <th st-sort="FirstName">First Name</th>
+                    <th st-sort="MiddleName">MiddleName</th>
+                    <th st-sort="JTS">State/VCIN #</th>
+                    <th st-sort="SSN">SSN</th>
+                    <th st-sort="DOB">Birth Date</th>
+                    <th style="text-align:center" st-sort="Gender">Gender</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <!--//ISR 1019-->
+            <tbody ng-hide="isLoading"><tr><td  ng-show="super"  class="col-sm-1-5">
+                <input style="cursor:pointer"  type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /> &nbsp; Select all</td>  &nbsp;&nbsp;
+                <td class="col-sm-1-5"> <i style="cursor:pointer" class="fa fa-times" ng-show="super" ng-click="Deleteall(row)" >&nbsp; DeleteAll</i></td>
+                </tr>
+               
+                <tr ng-repeat="row in displayed">
+
+                    
+                    <td class="col-sm-1-5">
+
+                        <input type="checkbox" ng-model="row.selected" ng-show="super">&nbsp;&nbsp;
+                        <i style="cursor:pointer" class="fa fa-pencil-square-o" ng-click="LoadClientProfile(row)"></i>
+                        <!--<i style="cursor:pointer" class="fa fa-times" ng-click="deleteClientProfile(row)"></i>-->
+                        <!--<input type="checkbox" name="cbox[]"  ng-click="MergeReferalToPerson(row)">-->
+                        <i style="cursor:pointer" class="fa fa-exchange" ng-click="MergePlacements(row)" ng-show="super" title="Merge Clients"></i>
+                        
+                    </td>
+                    <td  class="col-sm-1-5">{{row.LastName}}</td>
+                    <td  class="col-sm-1-5">{{row.FirstName}}</td>
+                    <td  class="col-sm-1-5">{{row.MiddleName}}</td>
+                    <td  class="col-sm-1-5" ng-show="CanShowTitle">{{row.JTS}}</td>
+                    <td class="col-sm-1-5" ng-show="CanShowTitleAdult">{{row.StateORVCIN}}</td>
+                    <td  class="col-sm-1-5">{{row.SSN}}</td>
+                    <td  class="col-sm-1-5">{{row.DOB | date: 'MM/dd/yyyy' }}</td>
+                    <td style="text-align:center" class="col-sm-1-5">{{row.Gender}}</td>
+                    <td class="col-sm-1-5">
+                        <button type="button" class="btn btn-xs btn-primary" style="margin-bottom:5px" 
+                                ng-click="deleteClientProfile(row)" ng-show="admin">
+                            Delete
+                        </button>
+                    </td> 
+                </tr>
+                
+                <tr ng-if="displayed.length === 0"><td style="text-align:center;" colspan="8">
+                                                       No Profiles found</td></tr>
+            </tbody>
+            <!--<tfoot>
+                <tr><td><div st-items-by-page="1" st-pagination=""></div>
+</tr>
+            </tfoot>-->
+            <tbody ng-show="isLoading">
+                <tr>
+                    <td style="text-align:center;padding-left:30em;" colspan="8">
+                        <div class="loading-indicator">
+                            <i class="fa fa-repeat fa-spin"></i> Loading . . .
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

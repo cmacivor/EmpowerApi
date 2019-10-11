@@ -1,0 +1,233 @@
+﻿
+<script>
+
+    $(document).ready(function () {
+        $("#txtDate").keyup(function () {
+            if ($(this).val().length == 2) {
+                $(this).val($(this).val() + "/");
+            } else if ($(this).val().length == 5) {
+                $(this).val($(this).val() + "/");
+            }
+        });
+    });
+</script>
+<form class="form-horizontal" name="frmFamilyMember" novalidate>
+    <div class="modal-header">
+        <h4><i class="fa fa-check-circle"></i>Family Member/Contact</h4>
+    </div>
+    <div class="container  custom-modal-body" ng-controller="ClientInfoController">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Last Name *</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="txtLastName" placeholder="Last Name"
+                       ng-model="FamilyProfile.FamilyProfile.Person.LastName" required>
+            </div>
+            <label class="col-sm-2 control-label">Relationship *</label>
+            <div class="col-sm-3">
+                <select class="form-control btn btn-default dropdown-toggle"
+                        ng-model="FamilyProfile.FamilyProfile.Relationship" ng-required="true"
+                        ng-options="item as item.Description for item in AllRelationships track by item.ID">
+                    <option value="">Relationship</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">First Name *</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="txtFirstName" placeholder="First Name"
+                       ng-model="FamilyProfile.FamilyProfile.Person.FirstName" ng-required="true">
+            </div>
+            <label class="col-sm-2 control-label">SSN </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="txtSSN" ui-mask="999-99-9999"
+                       placeholder="XXX-XX-XXXX" ng-model="FamilyProfile.FamilyProfile.Person.SSN">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Middle Name </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="txtMiddleName" placeholder="Middle Name"
+                       ng-model="FamilyProfile.FamilyProfile.Person.MiddleName">
+            </div>
+            <label class="col-sm-2 control-label">Marital Status</label>
+            <div class="col-sm-3">
+                <select class="form-control btn btn-default dropdown-toggle"
+                        ng-options="item as item.Name for item in AllMaritalStatus track by item.ID"
+                        ng-model="FamilyProfile.PersonSupplemental.MaritalStatus">
+                    <option value="">Marital Status</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Suffix </label>
+            <div class="col-sm-10">
+                <div class="col-sm-3">
+                    <select ng-model="FamilyProfile.FamilyProfile.Person.Suffix" class="form-control btn btn-default dropdown-toggle"
+                            ng-options="item as item.Name for item in Suffixes track by item.ID">
+                        <option value="">Suffix</option>
+                    </select>
+                </div>
+
+                <label class="col-sm-1 control-label" ng-show="IsVisibleAdult">DOB</label>
+                <div class="col-sm-3" ng-show="IsVisibleAdult">
+                    <div class="input-group" ng-class="{ 'has-error': frmFamilyMember.txtDOB.$invalid }">
+                        <input type="text" class="form-control" name="txtDOB" placeholder="MM/dd/yyyy" onkeyup="addSlashes(this);"
+                               ng-model="FamilyProfile.FamilyProfile.Person.DOB"
+                               datepicker-popup="MM/dd/yyyy" close-text="Close"
+                               is-open="datePicker.instances['DOB']" datepicker-options="dateOptions"
+                               aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                               show-button-bar="false" />
+
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="datePicker.open($event, 'DOB')">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <p ng-show="frmFamilyMember.txtDOB.$invalid" class="help-block">
+                    Enter a valid Date
+                </p>
+                <label class="col-sm-1 control-label" ng-show="IsVisibleAdult">POB</label>
+                <div class="col-sm-3" ng-show="IsVisibleAdult">
+                    <input type="text" class="form-control" name="txtMiddleName" placeholder="POB"
+                           ng-model="FamilyProfile.PersonSupplemental.POB">
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group" ng-show="IsVisibleAdult">
+            <label class="col-sm-2 control-label">Physical Health</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="txtPhysicalHealth" placeholder="Physical Health"
+                       ng-model="FamilyProfile.PersonSupplemental.PhysicalHealth">
+            </div>
+            <label class="col-sm-2 control-label" ng-show="IsVisibleAdult">Education Level</label>
+            <div class="col-sm-3" ng-show="IsVisibleAdult">
+                <select class="form-control btn btn-default dropdown-toggle"
+                        ng-model="FamilyProfile.PersonSupplemental.EducationLevel"
+                        ng-options="item as item.Name for item in AllEducationLevels track by item.ID">
+                    <option value="">Education Level</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="IsVisibleAdult">
+            <label class="col-sm-2 control-label">Mental Health</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="txtMentalHealth" placeholder="Mental Health"
+                       ng-model="FamilyProfile.PersonSupplemental.MentalHealth">
+            </div>
+            <label class="col-sm-2 control-label" ng-show="IsVisibleAdult">Job Status</label>
+            <div class="col-sm-3" ng-show="IsVisibleAdult">
+                <select class="form-control btn btn-default dropdown-toggle"
+                        ng-model="FamilyProfile.PersonSupplemental.JobStatus"
+                        ng-options="item as item.Name for item in AllJobStatuses track by item.ID">
+                    <option value="">Job Status</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="IsVisibleAdult">
+            <label class="col-sm-2 control-label">Substance Abuse</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="txtAbuse" placeholder="Substance Abuse"
+                       ng-model="FamilyProfile.PersonSupplemental.SubstanceAbuse">
+            </div>
+            <label class="col-sm-2 control-label">Court Record</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="txtCourtReceord" placeholder="Court Record"
+                       ng-model="FamilyProfile.PersonSupplemental.CourtRecord">
+            </div>
+        </div>
+        <div class="form-group">
+            <div ng-show="IsVisibleAdult">
+                <label class="col-sm-2 control-label">Employer</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="txtEmployer" placeholder="Employer"
+                           ng-model="FamilyProfile.PersonSupplemental.Employer">
+                </div>
+            </div>
+            <div ng-show="IsVisibleIncome">
+                <label class="col-sm-2 control-label">{{lblIncome}}</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" name="txtIncome" placeholder="Income"
+                           ng-model="FamilyProfile.PersonSupplemental.Income" maxlength="50">
+                </div>
+
+            </div>
+        </div>
+           
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Phone</label>
+            <div class="col-sm-9">
+                <label class="col-sm-1 control-label">Home</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" name="txtHome"
+                           ng-model="FamilyProfile.PersonSupplemental.HomePhone" ui-mask="999-999-9999" placeholder="XXX-XXX-XXXX">
+                </div>
+
+                <label class="col-sm-1 control-label">Work</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" name="txtWork"
+                           ng-model="FamilyProfile.PersonSupplemental.WorkPhone" ui-mask="999-999-9999" placeholder="XXX-XXX-XXXX">
+                </div>
+
+                <label class="col-sm-1 control-label">Ext.</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="txtWorkExt" placeholder="Ext."
+                           ng-model="FamilyProfile.PersonSupplemental.WorkPhoneExt" numbers-only="numbersOnly">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-9">
+                <div class="col-sm-4"></div>
+                <label class="col-sm-1 control-label">Alt</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" name="txtAlt"
+                           ng-model="FamilyProfile.PersonSupplemental.OtherPhone" maxlength="15" ui-mask="999-999-9999" placeholder="XXX-XXX-XXXX">
+                </div>
+
+                <label class="col-sm-1 control-label">Ext.</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="txtWorkExt" placeholder="Ext."
+                           ng-model="FamilyProfile.PersonSupplemental.OtherPhoneExt" numbers-only="numbersOnly">
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-show="IsVisibleOnlyCWB" >
+            <label class="col-sm-4 control-label">FHH </label>
+            <div class="col-sm-8">
+                <input type="radio" name="HasFHH" ng-model="FamilyProfile.PersonSupplemental.HasFHH" ng-value="true" /> Yes &nbsp;
+                <input type="radio" name="HasFHH" ng-model="FamilyProfile.PersonSupplemental.HasFHH" ng-value="false" /> No
+            </div>
+            <!--WO156256-->
+        </div>
+        <!--WO156256-->
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Emergency Contact ?</label>
+            <div class="col-sm-8">
+                <input type="radio" name="HasEmergencyContactNo" ng-model="FamilyProfile.PersonSupplemental.HasEmergencyContactNo" ng-value="true" /> Yes &nbsp;
+                <input type="radio" name="HasEmergencyContactNo" ng-model="FamilyProfile.PersonSupplemental.HasEmergencyContactNo" ng-value="false" /> No
+            </div>
+            <!--WO156256-->
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Comments</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" style="resize:none" rows="4"
+                          ng-model="FamilyProfile.PersonSupplemental.Comments"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-2">
+            <span class="alert-warning">* are mandatory</span>
+        </div>
+        <div class="col-sm-offset-6 col-sm-4">
+            <button type="submit" class="btn btn-sm btn-primary" ng-disabled="frmFamilyMember.$invalid || !frmFamilyMember.$dirty" ng-click="CreateOrUpdate(!frmFamilyMember.$invalid, FamilyProfile)">{{ SubmitButtonText }}</button>
+            <button type="button" class="btn btn-sm btn-primary" ng-disabled="!frmFamilyMember.$dirty" ng-click="Reset()">Reset</button>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="CloseFamilyMember()">Cancel</button>
+        </div>
+    </div>
+</form>

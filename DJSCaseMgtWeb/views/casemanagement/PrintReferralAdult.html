@@ -1,0 +1,514 @@
+﻿<script>
+    function PrintElem(elem) {
+        $("input").each(function () {
+            $(this).attr("value", $(this).val());
+        });
+        Popup($(elem).html());
+        
+    }
+
+    function Popup(data) {
+        var mywindow = window.open('', '', 'height=400,width=600');
+        mywindow.document.write('<html><head><title></title>');
+        // mywindow.document.write('<link rel="stylesheet" href="/styles/main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+   
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+
+        return true; 
+    }
+</script>
+
+<form class="form-horizontal" name="frmPlacement" novalidate  readonly style="border:1px  solid black">
+    <br><br>
+     <input type="button" value="Print Referrals" class="btn btn-xs btn-primary pull-right" onclick="PrintElem('#mydiv')" />&nbsp;
+    <input type="button" value="Print Progress Notes" class="btn btn-xs btn-primary pull-left" onclick="PrintElem('#PN')" />
+
+    <div class="container custom-modal-body" tabindex='-1' id="mydiv" style="max-height:2000px;width:100%">
+        
+        <div class="modal-header">
+            <h4 class="modal-title"><i class="fa fa-check-circle"></i>  EMPOWER REFERRAL FOR SERVICES & CASE MANAGEMENT</h4>
+
+            
+        </div>
+        <br>
+        <!--<input type="button" value="Print this page" onClick="window.print()" class="pull-right"><br>-->
+        <strong class="control-strong pull-left" style="background-color: #d9d9d9"> Adult Profile  Information</strong><br><hr>
+        <div style="border:1px solid black">
+            <br>
+            <div >
+                <strong >Adults's Name</strong>&nbsp;&nbsp;
+               
+                    <input type="text" id="search" 
+                           ng-model="currentClientName"  size="40"/>&nbsp;&nbsp;&nbsp;
+               
+                <strong >SSN</strong>&nbsp;&nbsp;
+                
+                    <input type="text" id="search" 
+                           ng-model="ReqClient.SSN" />
+                </div><br>
+           
+            <div >
+                <strong>Gender</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+              
+                    <input type="text" id="search" 
+                           ng-model=" ReqClient.Gender" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               
+                <strong >Race</strong>&nbsp;&nbsp;
+              
+                    <input type="text" id="search" 
+                           ng-model="Person.Person.Race.Description" />
+                </div><br>
+        
+            <div>
+                <strong >State/VCIN</strong>&nbsp;&nbsp;
+                
+                    <input type="text" id="search" 
+                           ng-model="Person.Person.JTS" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              
+                <strong>Current age</strong>
+                
+                    <input type="text" id="search" 
+                          ng-model="Person.Person.CurrentAge" />
+               
+            </div><br>
+            
+            
+
+        </div>
+     
+     
+       
+        <br><hr>
+        <strong class="control-strong pull-left" style="background-color: #d9d9d9"> Referral  Information</strong><br><hr>
+        <div style="border:1px solid black">
+            <div>
+                <strong>Case Number </strong>&nbsp;&nbsp;
+                {{currentprintplacement.Placement.CaseNumber}} &nbsp;&nbsp;&nbsp;&nbsp; 
+
+                          
+
+                <strong>Court Name </strong>&nbsp;&nbsp;
+                
+                {{currentprintplacement.Placement.CourtName.Name}}&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <!--<input type="text" id="search" name="txtScore" ng-model="currentprintplacement.Placement.CourtName" maxlength="15" ng-required={{x}}>&nbsp;&nbsp;-->
+
+              
+
+            </div><br>
+            <div>
+                <strong>Court Order Date</strong>&nbsp;&nbsp;
+
+
+                <input type="text" name="txtCourtOrderDate" placeholder="MM/dd/yyyy"
+                       ng-model="currentprintplacement.Placement.CourtOrderDate" datepicker-popup="MM/dd/yyyy"
+                       is-open="datePicker.instances['CourtOrderDate']" close-text="Close"
+                       aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                       datepicker-options="dateOptions" show-button-bar="false" />&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+                <strong>Risk Level*</strong>&nbsp;&nbsp;
+
+                {{currentprintplacement.Placement.PlacementLevel.Name}}
+
+            </div><br>
+            <div>
+                <strong>Next Court Date</strong>&nbsp;&nbsp;
+
+
+                <input type="text" name="txtNextCourtDate" placeholder="MM/dd/yyyy"
+                       ng-model="currentprintplacement.Placement.NextCourtDate" datepicker-popup="MM/dd/yyyy"
+                       is-open="datePicker.instances['NextCourtOrderDate']" close-text="Close"
+                       aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                       datepicker-options="dateOptions" show-button-bar="false" />&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+                <strong>Judge *</strong>&nbsp;&nbsp;
+
+                {{ currentprintplacement.Placement.Judge.Name}}
+
+            </div>
+        </div><br><hr>
+        <strong class="control-strong pull-left" style="background-color: #d9d9d9"> Family Information</strong><br><hr>
+        <div class="row">
+            <table st-table="familyinfo" st-safe-src="FamilyProfiles" ng-model="selectedPredicate" border="1"
+                   class="sttable table-striped" >
+                <thead>
+                    <tr>
+                    
+                        <th style="text-align:center">  LastName</th>
+                        <th style="text-align:center">First Name</th>
+                        <th>Middle Name</th>
+                        <th>Suffix</th>
+                        <th>Relationship</th>
+                        <th style="text-align:center">Home Phone</th>
+                        <th style="text-align:center">Work Phone</th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in FamilyProfiles">
+                      
+                        <td style="text-align:center" class="col-sm-1-5">{{row.FamilyProfile.Person.LastName}}</td>
+                        <td style="text-align:center" class="col-sm-1-5">{{row.FamilyProfile.Person.FirstName}}</td>
+                        <td class="col-sm-1-5">{{row.FamilyProfile.Person.MiddleName}}</td>
+                        <td class="col-sm-1-5">{{row.FamilyProfile.Person.Suffix.Description}}</td>
+                        <td class="col-sm-1-5">{{row.FamilyProfile.Relationship.Description}}</td>
+                        <td class="col-sm-1-5" style="text-align:center">{{row.PersonSupplemental.HomePhone}}</td>
+                        <td class="col-sm-1-5" style="text-align:center">{{row.PersonSupplemental.WorkPhone}}</td>
+                        
+                    </tr>
+                </tbody>
+                
+            </table>
+        </div>
+        <br><hr>
+        <strong class="control-strong pull-left" style="background-color: #d9d9d9"> Referral Source Information</strong><br><hr>
+       
+            <div style="border:1px solid black">
+                <br>
+            <div>
+                <strong> Full Name</strong>&nbsp;&nbsp;
+              
+                    <input type="text"  id="search"
+                           ng-model="refsourcename" />&nbsp;&nbsp;&nbsp;&nbsp;
+              
+                <strong>Title</strong>&nbsp;&nbsp;
+               
+                    <input type="text" id="search"
+                           ng-model="CurrentPlacementEnrollment.Source.JobTitle.Name" size="30" />
+
+              
+            </div><br>
+            <div >
+                <strong > Phone Number</strong>&nbsp;&nbsp;
+              
+                    <input type="text"  id="search"
+                           ng-model="CurrentPlacementEnrollment.Source.Phone" />&nbsp;&nbsp;&nbsp;&nbsp;
+
+               
+                <strong>Fax</strong>&nbsp;&nbsp;
+                
+                    <input type="text"  id="search"
+                           ng-model="CurrentPlacementEnrollment.Source.Fax" />
+
+            
+            </div><br>
+            <div>
+                <strong> E-Mail</strong>&nbsp;&nbsp;
+               
+                    <input type="text" id="search" maxlength="75" size="35"
+                           ng-model="CurrentPlacementEnrollment.Source.EMail" />&nbsp;&nbsp;&nbsp;&nbsp;
+
+              
+                <strong >Department</strong>&nbsp;&nbsp;
+              
+                    <input type="text" id="search"
+                           ng-model="CurrentPlacementEnrollment.Source.Department" />
+
+               
+            </div>
+        </div>
+        <br><hr>
+        
+        <div >
+            <strong >Placement Charges*</strong>
+            <div>
+                <table st-table="displayed" st-safe-src="rowCollection" ng-model="selectedPredicate" border="1" align="center" >
+                    <tbody>
+                        <tr>
+                        <th>VCC code</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr ng-repeat="row in currentprintplacement.PlacementOffense">
+                            <td>
+                            
+                                {{row.Offense.VCCCode }}
+                            </td>
+                            <td >{{row.Offense.Description }} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <strong >Court Order Narrative</strong>
+          
+               
+                     <p>   {{currentprintplacement.Placement.CourtOrderNarrative}} </p>
+           
+        </div><br>
+
+        <!--c[item.FirstName]+'-'+c[item.LastName]-->
+        <div >
+            <strong>Refer to this Service *</strong>
+            
+              <p>  {{rts}}</p>
+         
+        </div>
+
+        <div >
+            <strong >Basis of Recommendation* / Referral</strong>
+            
+               
+                 <p>    {{ CurrentPlacementEnrollment.BasisofReferral}}  </p>
+            </div>
+        <br>
+
+        <div >
+            <strong>Case Manager / Service Provider Dialog Notes</strong>
+          
+               
+                       <p>{{CurrentPlacementEnrollment.SourceNotes}}<p/>
+        </div>
+        <div>
+            <strong >Referral Status Note</strong>
+           
+               
+                       <p> {{CurrentPlacementEnrollment.Comments}}</p>
+           
+        </div>
+        <br><hr>
+        <strong class="control-strong pull-left" style="background-color: #d9d9d9"> Case Manager Officer</strong><br><hr>
+        <div style="border:1px solid black">
+        <div>
+            <strong >Full Name</strong>&nbsp;&nbsp;
+           
+                <input type="text"  id="search"
+                       ng-model="counselorprintname " />&nbsp;&nbsp;&nbsp;&nbsp;
+           
+            <strong >Title</strong>&nbsp;&nbsp;
+           
+                <input type="text" id="search"
+                       ng-model="CurrentPlacementEnrollment.Counselor.JobTitle.Name " />
+          
+        </div><br>
+            <div >
+                <strong >Phone Number</strong>&nbsp;&nbsp;
+               
+                    <input type="text" id="search" ng-model="CurrentPlacementEnrollment.Counselor.Phone " />&nbsp;&nbsp;&nbsp;&nbsp;
+               
+                <strong >Department</strong>&nbsp;&nbsp;
+               
+                    <input type="text" id="search"
+                           ng-model="CurrentPlacementEnrollment.Counselor.Department " />
+               
+            </div><br>
+            <div >
+                <strong >E-mail</strong>&nbsp;&nbsp;
+                
+                    <input type="text" id="search"
+                           ng-model="CurrentPlacementEnrollment.Counselor.Email " />&nbsp;&nbsp;&nbsp;&nbsp;
+               
+                <strong >Fax</strong>&nbsp;&nbsp;
+               
+                    <input type="text"  id="search"
+                           ng-model="CurrentPlacementEnrollment.Counselor.Fax " />
+               
+            </div>
+            </div><br><hr>
+        <div >
+            <strong >Service Begin Date</strong>&nbsp;&nbsp;
+           
+              
+                    <input type="text" id="search"  name="txtServiceStartDate" placeholder="MM/dd/yyyy"
+                           ng-model="CurrentPlacementEnrollment.BeginDate" datepicker-popup="MM/dd/yyyy"
+                           is-open="datePicker.instances['ServiceBeginDate']" close-text="Close"
+                           aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                           datepicker-options="dateOptions" show-button-bar="false" />&nbsp;&nbsp;&nbsp;&nbsp;
+              
+          
+            <strong >End Date</strong>&nbsp;&nbsp;
+         
+               
+                    <input type="text" id="search" name="txtServiceEndDate" placeholder="MM/dd/yyyy"
+                           ng-model="CurrentPlacementEnrollment.EndDate" datepicker-popup="MM/dd/yyyy"
+                           is-open="datePicker.instances['ServiceEndDate']" close-text="Close"
+                           aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                           datepicker-options="dateOptions" show-button-bar="false" />
+         
+           
+        </div><br>
+        <div>
+            <strong >Case Status</strong>&nbsp;&nbsp;
+            
+             <p>  {{CurrentPlacementEnrollment.ServiceRelease.Name}} </p><br>
+          
+    
+            <strong >Service Outcomes</strong>&nbsp;&nbsp;
+           
+               
+                    <p>   {{CurrentPlacementEnrollment.ServiceOutcome.Name }}</p>
+            
+      
+        </div ><br>
+        <div>
+            <strong >Outcome Comments</strong>
+          
+              
+                     <p>    {{CurrentPlacementEnrollment.Outcome}}</p>
+            </div>
+        <br>
+
+        <div>
+            <strong>Date Case Assigned</strong>&nbsp;&nbsp;
+
+            <input type="text" id="search" name="txtServiceEndDate" placeholder="MM/dd/yyyy"
+                   ng-model="CurrentPlacementEnrollment.DateCaseAssigned" datepicker-popup="MM/dd/yyyy"
+                   is-open="datePicker.instances['ServiceEndDate']" close-text="Close"
+                   aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                   datepicker-options="dateOptions" show-button-bar="false" />
+
+         
+        </div>
+        <br>
+       
+      
+
+
+        <div>
+            <strong class="control-strong pull-left col-sm-3" style="background-color: #d9d9d9"> Existing service units</strong><br><hr>
+            <div >
+                <table st-table="displayed" st-safe-src="rowCollection" ng-model="selectedPredicate"
+                       border="1" >
+                    <thead>
+                        <tr>
+                           
+                            <th class="col-sm-2" style="width:33%">Month</th>
+                            <th class="col-sm-2" style="width:30%">Year</th>
+                            <th class="col-sm-2">Units</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody ng-hide="isLoading">
+                        <tr ng-repeat="row in CurrentServiceUnits">
+                           
+                            <td class="col-sm-2">{{row.Month}}</td>
+                            <td class="col-sm-2">{{row.Year}}</td>
+                            <td class="col-sm-2">{{row.Units}}</td>
+                            
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+       
+        <div class="modal-footer">
+          
+            <div class="col-sm-offset-6 col-sm-4">
+                <button type="button" class="btn btn-sm btn-primary" ng-click="CloseModal()">Cancel</button>
+            </div>
+        </div>
+        <script type="text/ng-template" id="my-custom-template">
+            <div class="left-panel">
+                <span>({{data.VCCCode}})</span>
+            </div>
+            <div class="right-panel">
+                <span>({{data.GeneralHeading}})</span>
+            </div>
+        </script>
+    </div>
+    <div id="PN" class="container custom-modal-body" tabindex='-1' style="max-height:2000px;width:100%">
+        <hr><br>
+        <h2> EMPOWER REFERRAL FOR SERVICES & CASE MANAGEMENT</h2>
+        <br><hr><strong>Adult Info </strong><br><br>
+        <div style="border:1px solid black">
+            <br>
+            
+            <div>
+                <strong>Adults's Name</strong>&nbsp;&nbsp;
+
+                <input type="text" id="search"
+                       ng-model="currentClientName" />&nbsp;&nbsp;&nbsp;
+
+                <strong>SSN</strong>&nbsp;&nbsp;
+
+                <input type="text" id="search"
+                       ng-model="ReqClient.SSN" />
+            </div><br>
+
+            <div>
+                <strong>Gender</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <input type="text" id="search"
+                       ng-model="ReqClient.Gender" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <strong>Race</strong>&nbsp;&nbsp;
+
+                <input type="text" id="search"
+                       ng-model="Person.Person.Race.Description" />
+            </div><br>
+
+            <div>
+                <strong>State/VCIN Number</strong>&nbsp;&nbsp;
+
+                <input type="text" id="search"
+                       ng-model="Person.Person.JTS" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <strong>Current age</strong>
+
+                <input type="text" id="search"
+                       ng-model="Person.Person.CurrentAge" />
+
+            </div><br>
+           
+
+
+        </div><br>
+        <div style="border:1px solid black">
+            <strong>Referral Status Note</strong>
+
+
+            <p>{{CurrentPlacementEnrollment.Comments}} </p>
+
+        </div>
+        <br><hr>
+        <strong>Progress Notes</strong><br>
+        <div>
+            <table st-table="displayed" st-safe-src="rowCollection" ng-model="selectedPredicate"
+                   border="1">
+                <thead>
+                    <tr>
+
+
+                        <th st-sort="CommentDate" style="text-align:left">Date</th>
+                        <th st-sort="Comment" style="text-align:left">Comment</th>
+                        <th st-sort="ContactType.Name" style="text-align:left">Contact Type</th>
+                        <th st-sort="SubContactType.Name" style="text-align:left">Sub Contact Type</th>
+
+                    </tr>
+                </thead>
+                <tbody ng-hide="isLoading">
+                    <tr ng-repeat="row in CurrentProgressNotes| orderBy: '-CommentDate'">
+
+                        <td class="col-sm-2" style="width:15%">{{row.CommentDate | date: 'MM/dd/yyyy'}}</td>
+                        <td class="col-sm-2" style="width:35%">{{row.Comment}}</td>
+                        <td class="col-sm-2" style="width:25%">{{row.ContactType.Name}}</td>
+                        <td class="col-sm-2" style="width:25%">{{row.SubContactType.Name}}</td>
+
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</form>

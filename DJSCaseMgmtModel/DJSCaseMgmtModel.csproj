@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{003F2CD2-0747-4827-ADB6-91D9B946A9AE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DJSCaseMgmtModel</RootNamespace>
+    <AssemblyName>DJSCaseMgmtModel</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\ActionPlan.cs" />
+    <Compile Include="Entities\AddressType.cs" />
+    <Compile Include="Entities\Application.cs" />
+    <Compile Include="Entities\AspNetUser.cs" />
+    <Compile Include="Entities\AspNetUserRole.cs" />
+    <Compile Include="Entities\Assessment.cs" />
+    <Compile Include="Entities\AssessmentSubtype.cs" />
+    <Compile Include="Entities\AssessmentType.cs" />
+    <Compile Include="Entities\AssistanceType.cs" />
+    <Compile Include="Entities\AuditBase.cs" />
+    <Compile Include="Entities\BCPTargets.cs" />
+    <Compile Include="Entities\BehaviorChangePlan.cs" />
+    <Compile Include="Entities\CareerPathway.cs" />
+    <Compile Include="Entities\EmploymentPlan.cs" />
+    <Compile Include="Entities\PropertyType.cs" />
+    <Compile Include="Entities\Client.cs" />
+    <Compile Include="Entities\ClientProfile.cs" />
+    <Compile Include="Entities\ContactType.cs" />
+    <Compile Include="Entities\CourtName.cs" />
+    <Compile Include="Entities\Document.cs" />
+    <Compile Include="Entities\EducationLevel.cs" />
+    <Compile Include="Entities\Enrollment.cs" />
+    <Compile Include="Entities\EntityBase.cs" />
+    <Compile Include="Entities\FamilyProfile.cs" />
+    <Compile Include="Entities\FundingSource.cs" />
+    <Compile Include="Entities\Gender.cs" />
+    <Compile Include="Entities\GoalSteps.cs" />
+    <Compile Include="Entities\JobStatus.cs" />
+    <Compile Include="Entities\JobTitle.cs" />
+    <Compile Include="Entities\Judge.cs" />
+    <Compile Include="Entities\Login.cs" />
+    <Compile Include="Entities\LoginDomain.cs" />
+    <Compile Include="Entities\LoginProfile.cs" />
+    <Compile Include="Entities\LoginRole.cs" />
+    <Compile Include="Entities\MaritalStatus.cs" />
+    <Compile Include="Entities\Offense.cs" />
+    <Compile Include="Entities\Person.cs" />
+    <Compile Include="Entities\PersonAddress.cs" />
+    <Compile Include="Entities\PersonSupplemental.cs" />
+    <Compile Include="Entities\Placement.cs" />
+    <Compile Include="Entities\PlacementLevel.cs" />
+    <Compile Include="Entities\PlacementOffense.cs" />
+    <Compile Include="Entities\ProgressNote.cs" />
+    <Compile Include="Entities\Race.cs" />
+    <Compile Include="Entities\RefreshToken.cs" />
+    <Compile Include="Entities\Relationship.cs" />
+    <Compile Include="Entities\School.cs" />
+    <Compile Include="Entities\ServiceCategory.cs" />
+    <Compile Include="Entities\ServiceOutcome.cs" />
+    <Compile Include="Entities\ServiceProgram.cs" />
+    <Compile Include="Entities\ServiceProgramCategory.cs" />
+    <Compile Include="Entities\ServiceProvider.cs" />
+    <Compile Include="Entities\ServiceRelease.cs" />
+    <Compile Include="Entities\ServiceUnit.cs" />
+    <Compile Include="Entities\Staff.cs" />
+    <Compile Include="Entities\SubContactType.cs" />
+    <Compile Include="Entities\Suffix.cs" />
+    <Compile Include="Entities\System.cs" />
+    <Compile Include="Entities\SystemBase.cs" />
+    <Compile Include="Entities\UserModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BCPTargetsViewModel.cs" />
+    <Compile Include="ViewModels\BehaviorChangePlanViewModel.cs" />
+    <Compile Include="ViewModels\ClientName.cs" />
+    <Compile Include="ViewModels\ClientProfileViewModel.cs" />
+    <Compile Include="ViewModels\ClientSearchResults.cs" />
+    <Compile Include="ViewModels\EnrollmentViewModel.cs" />
+    <Compile Include="ViewModels\FamilyProfileViewModel.cs" />
+    <Compile Include="ViewModels\PersonViewModel.cs" />
+    <Compile Include="ViewModels\PlacementViewModel.cs" />
+    <Compile Include="ViewModels\ServiceProgramCategory.cs" />
+    <Compile Include="ViewModels\ServiceProgramView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

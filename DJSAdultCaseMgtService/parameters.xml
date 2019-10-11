@@ -1,0 +1,40 @@
+﻿<!--
+  This file defines configuration parameters that must change in each hosting environment. 
+  
+  These and other auto-generated parameters are built into the Web Deploy Package and transformed during package installation. 
+  
+  All parameters have a tokenized defaultValue. Do not use "real" functional values here. Doing so would mask transformation errors during installation. 
+  
+  Valid environment-specific values are applied during deployment using one of two approaches: 
+  
+    1. supplying a separate xml file to msdeploy.exe using the -setParamFile flag (see params_dev.xml), or 
+    2. keying in each value from the "Import Application Package" dialog in IIS.
+  
+  Use the local-name() function for a "namespace agnostic" XPATH matching of nodes with namespace declarations. These nodes will not match otherwise.
+-->
+<parameters>
+  <parameter name="Environment" description="Enter one of the following environment values: development, staging, or production." defaultValue="__Environment__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='Environment']/@value" />
+  </parameter>
+  <parameter name="DJSCaseMgtContext" description="Enter a SqlClient connection string for the DJSCaseMgtContext Database Connection." defaultValue="__DJSCaseMgtContext__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/connectionStrings/add[@name='DJSCaseMgtContext']/@connectionString" />
+  </parameter>
+  <parameter name="ELMAH SQL Connection String" description="Enter a SqlClient connection string for the DIT ELMAH database (typically using the elmahlogger account)." defaultValue="__ElmahSqlConnectionString__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/connectionStrings/add[@name='ELMAH']/@connectionString" />
+  </parameter>
+  <parameter name="ELMAH Application Name" description="Enter one of the following (matching the target environment): CaseMgtService." defaultValue="__ElmahApplicationName__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/elmah/errorLog[@applicationName='__ElmahApplicationName__']/@applicationName" />
+  </parameter>
+  <parameter name="ELMAH MVC Handler Allowed Roles" description="Enter the Richmond Active Directory Group authorized to view the elmah web handler." defaultValue="__ElmahMvcHandlerAllowedRoles__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='elmah.mvc.allowedRoles']/@value" />
+  </parameter>
+  <parameter name="ViewerRole" description="Enter the Richmond Active Directory Group authorized to view the services." defaultValue="__ViewerRole__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='ViewerRole']/@value" />
+  </parameter>
+  <parameter name="EditorRole" description="Enter the Richmond Active Directory Group authorized to view the services." defaultValue="__EditorRole__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='EditorRole']/@value" />
+  </parameter>
+  <parameter name="AdministratorRole" description="Enter the Richmond Active Directory Group authorized to view the services" defaultValue="__AdministratorRole__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='AdministratorRole']/@value" />
+  </parameter>
+</parameters>

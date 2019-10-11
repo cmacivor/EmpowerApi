@@ -1,0 +1,220 @@
+﻿
+<form class="form-horizontal" name="frmPlacement" novalidate>
+    <div class="modal-header">
+        <h4 class="modal-title"><i class="fa fa-check-circle"></i> {{modalPlacementTitle}}</h4>
+    </div>
+
+    <div class="form-group" ng-show="IsVisibleForAdult">
+        <label class="col-sm-2 control-label">Case Number</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="CourtName" placeholder="Case Number"
+                   ng-model="CurrentPlacement.Placement.CaseNumber">
+        </div>
+        <label class="col-sm-3 control-label" style="text-align:left">Court Name </label>
+        <div class="col-sm-3">
+            <select class="form-control btn btn-default dropdown-toggle"
+                    ng-model="CurrentPlacement.Placement.CourtName" ng-change="onSelect()"
+                    ng-options="item as item.Name for item in AllCourtName|orderBy:'Name' track by item.ID"
+                    tooltip-placement="bottom" tooltip-special="{{ CurrentPlacement.CourtName.Name }}">
+                <option value="">Select Court Name</option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="container custom-modal-body">
+        <div class="row form-group">
+            <label class="col-sm-2 control-label">{{lblCourtOrderDate}}</label>
+            <div class="col-sm-3">
+                <div class="input-group" ng-class="{ 'has-error': frmPlacement.txtCourtOrderDate.$invalid }">
+                    <input type="text" class="form-control" name="txtCourtOrderDate" placeholder="MM/dd/yyyy" onkeyup="addSlashes(this);"
+                           ng-model="CurrentPlacement.Placement.CourtOrderDate" datepicker-popup="MM/dd/yyyy"
+                           is-open="datePicker.instances['CourtOrderDate']" close-text="Close"
+                           aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                           datepicker-options="dateOptions" show-button-bar="false" />
+
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="datePicker.open($event, 'CourtOrderDate')">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <p ng-show="frmPlacement.txtCourtOrderDate.$invalid" class="help-block">
+                Enter a valid Date
+
+            </p>
+            <label class="col-sm-3 control-label" style="text-align:left">{{lblrisk}}</label>
+            <div class="col-sm-3" style="text-align:left">
+                <select class="form-control btn btn-default dropdown-toggle"
+                        ng-model="CurrentPlacement.Placement.PlacementLevel" ng-required="true"
+                        tooltip-placement="bottom" tooltip-special="{{ CurrentPlacement.PlacementLevel.Name }}"
+                        ng-options="item as item.Name for item in AllPlacementLevels|orderBy:'Name' track by item.ID">
+                    <option value="">{{lblriskPlaceholder}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <label class="col-sm-2 control-label">{{lblNextCourtDate}}</label>
+            <div class="col-sm-3">
+                <div class="input-group" ng-class="{ 'has-error': frmPlacement.txtNextCourtDate.$invalid }">
+                    <input type="text" class="form-control" name="txtNextCourtDate" placeholder="MM/dd/yyyy" onkeyup="addSlashes(this);"
+                           ng-model="CurrentPlacement.Placement.NextCourtDate" datepicker-popup="MM/dd/yyyy"
+                           is-open="datePicker.instances['NextCourtOrderDate']" close-text="Close"
+                           aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                           datepicker-options="dateOptions" show-button-bar="false" />
+
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="datePicker.open($event, 'NextCourtOrderDate')">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <p ng-show="frmPlacement.txtNextCourtDate.$invalid" class="help-block">
+                Enter a valid Date
+
+            </p>
+            <label class="col-sm-3 control-label" style="text-align:left">{{lblJudge}}</label>
+            <div class="col-sm-3">
+                <select class="form-control btn btn-default dropdown-toggle"
+                        ng-model="CurrentPlacement.Placement.Judge" ng-required="true" ng-change="onSelect()"
+                        ng-options="item as item.Name for item in AllJudges|orderBy:'Name' track by item.ID"
+                        tooltip-placement="bottom" tooltip-special="{{ CurrentPlacement.Judge.Name }}">
+                    <option value="">{{lblJudgePlaceholder}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row form-group" ng-show="IsVisibleCWB">
+            <label class="col-sm-2 control-label">Placement Charges*</label>
+            <div class="col-sm-9">
+                <!--<input type="text" class="form-control" name="txtChargeCode" placeholder="Pick Charge Code"
+                       typeahead="AllOffenses for offense in GetPlacementCharges($viewValue)">-->
+
+                <input type="text" ng-model="SelectedOffense" class="form-control" typeahead-focus=""
+                       placeholder="Pick Charge Code"
+                       typeahead="offense.VCCCode +''+'('+ offense.Description +')' for offense in GetPlacementCharges( $viewValue)|filter:filterByKeyword"
+                       typeahead-on-select='OnOffenseSelect($item)' typeahead-min-length='2'>
+                <table st-table="displayed" st-safe-src="rowCollection" ng-model="selectedPredicate"
+                       class="sttable table-striped " style="min-height:150px; max-height:150px;margin-top:20px;">
+                    <tbody>
+                        <tr ng-repeat="row in CurrentPlacement.PlacementOffense">
+                            <td class="col-sm-3">
+                                <i class="fa fa-times" ng-click="RemoveOffense(row)"></i>
+                                &nbsp; &nbsp;
+                                {{row.Offense.VCCCode }}
+                            </td>
+                            <td class="col-sm-9">{{row.Offense.Description }} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row form-group" ng-show="VisibleOnlyCWB">
+            <label class="col-sm-2 control-label">Assistance Type</label>
+            <div class="col-sm-3">
+                <select class="form-control btn btn-default dropdown-toggle"
+                        ng-model="CurrentPlacement.Placement.AssistanceType" ng-change="onSelect()"
+                        ng-options="item as item.Name for item in AllAssistanceType|orderBy:'Name' track by item.ID"
+                        tooltip-placement="bottom" tooltip-special="{{ CurrentPlacement.AssistanceType.Name }}">
+                    <option value="">Select Assistance Type</option>
+                </select>
+
+            </div>
+         </div>
+
+            <div class="row form-group">
+                <label class="col-sm-2 control-label">{{lblCourtOrderNarrative}}</label>
+                <div class="col-sm-9">
+                    <textarea type="text" class="form-control" id="dtNextCourt" 
+                              rows="4" style="resize:none" ng-model="CurrentPlacement.Placement.CourtOrderNarrative"></textarea>
+                </div>
+            </div>
+            <div class="row form-group" ng-show="IsVisibleForAdult">
+                <label class="col-sm-2 control-label">Comments</label>
+                <div class="col-sm-9">
+                    <textarea type="text" class="form-control" id="dtNextCourt" placeholder="Court Order Narrative"
+                              rows="4" style="resize:none" ng-model="CurrentPlacement.Placement.Comments"></textarea>
+                </div>
+            </div>
+        <div class="row form-group" ng-show="VisibleOnlyCWB">
+            <label class="col-sm-2 control-label">Employer Name</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="txtEmployerName" placeholder="Employer" ng-model="CurrentPlacement.Placement.EmployerName" />
+            </div>
+            <label class="col-sm-3 control-label" style="text-align:left">Position</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="txtEmployerPosition" placeholder="Position" ng-model="CurrentPlacement.Placement.EmployerPosition" />
+            </div>
+        </div>
+        <div class="row form-group" ng-show="VisibleOnlyCWB">
+            <label class="col-sm-2 control-label">Start Date</label>
+            <div class="col-sm-3">
+                <div class="input-group" ng-class="{ 'has-error': frmPlacement.txtEmployerStartDate.$invalid }">
+                    <input type="text" class="form-control" name="txtEmployerStartDate" placeholder="MM/dd/yyyy" onkeyup="addSlashes(this);"
+                           ng-model="CurrentPlacement.Placement.EmployerStartDate" datepicker-popup="MM/dd/yyyy" is-open="datePicker.instances['EmployerStartDate']"
+                           close-text="Close" aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$" datepicker-options="dateOptions"
+                           show-button-bar="false" />
+
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="datePicker.open($event, 'EmployerStartDate')">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <p ng-show="frmPlacement.txtEmployerStartDate.$invalid" class="help-block">
+                Enter a valid Date
+
+            </p>
+            <label class="col-sm-3 control-label" style="text-align:left">Wages ($ per hour)</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="txtEmployerWages" placeholder="Wages" ng-model="CurrentPlacement.Placement.EmployerWages" />
+            </div>
+        </div>
+
+        <div class="row form-group" ng-show="VisibleOnlyCWB">
+            <label class="col-sm-2 control-label">Benefits</label>
+            <div class="col-sm-3">
+                <select class="form-control btn btn-default dropdown-toggle" ng-model="CurrentPlacement.Placement.EmployerBenefits" ng-options="item.value as item.label for item in optEmployerBenefits" ng-required="false">
+                    <option value="">Select Yes or No</option>
+                </select>
+            </div>
+            <label class="col-sm-3 control-label" style="text-align:left">Career Pathway Position</label>
+            <div class="col-sm-3" style="text-align:left">
+                <select class="form-control btn btn-default dropdown-toggle" ng-model="CurrentPlacement.Placement.CareerPathway" ng-required="false"
+                        tooltip-placement="bottom" tooltip-special="{{ CurrentPlacement.CareerPathway.Name }}" ng-options="item as item.Name for item in AllCareerPathway|orderBy:'Name' track by item.ID">
+                    <option value="">Select Career Pathway</option>
+                </select>
+            </div>
+        </div>
+        <div class="row form-group" ng-show="VisibleOnlyCWB">
+            <label class="col-sm-2 control-label">Full or Part-Time</label>
+            <div class="col-sm-3">
+                <select class="form-control btn btn-default dropdown-toggle" ng-model="CurrentPlacement.Placement.EmployerFullPartTime" ng-options="item.value as item.label for item in optEmployerFullPartTime" ng-required="false">
+                    <option value="">Select Full or Part-Time</option>
+                </select>
+            </div>
+        </div>
+        </div>
+    <div class="modal-footer">
+        <div class="col-sm-2">
+            <span class="alert-warning">* are mandatory</span>
+        </div>
+        <div class="col-sm-offset-6 col-sm-4">
+            <button type="submit" class="btn btn-sm btn-primary" ng-disabled="frmPlacement.$invalid || !frmPlacement.$dirty" ng-click="CreateOrUpdate(!frmPlacement.$invalid, CurrentPlacement)">{{ SubmitButtonText }}</button>
+            <button type="button" class="btn btn-sm btn-primary" ng-disabled="!frmPlacement.$dirty" ng-click="Reset()">Reset</button>
+            <button type="button" class="btn btn-sm btn-primary" ng-click="CloseModal()">Cancel</button>
+        </div>
+    </div>
+    <script type="text/ng-template" id="my-custom-template">
+        <div class="left-panel">
+            <span>({{data.VCCCode}})</span>
+        </div>
+        <div class="right-panel">
+            <span>({{data.GeneralHeading}})</span>
+        </div>
+    </script>
+</form>

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="justiceservices" />
+  <setParameter name="DJSCaseMgtContext-Web.config Connection String" value="Server=DIT-MSSQL01-DV;Database=JusticeServices;User Id=JusticeServicesAppId;Password=kidyovr99!!;MultipleActiveResultSets=True" />
+</parameters>

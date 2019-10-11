@@ -1,0 +1,42 @@
+﻿<div class="container">
+    <h3><i class="fa fa-check-circle"></i> {{ PageHeading }}</h3>
+</div>
+
+<div class="container">
+    <form class="form-horizontal" name="frmOffense">
+       <div class="form-group">
+            <label class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="txtName" placeholder="Name"
+                       ng-model="Offense.Name">
+            </div>
+            <label class="col-sm-2 control-label">DYFS</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="txtDYFS" placeholder="DYFS"
+                       ng-model="Offense.DYFS">
+            </div>
+        </div>
+       <div class="form-group">
+            <label class="col-sm-3 control-label">Description</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="idDescription" placeholder="Description"
+                       ng-model="CurrentSelection.Description">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Active</label>
+            <div class="col-sm-9">
+                <input type="radio" name="RelationshipActive" ng-model="CurrentSelection.Active" ng-value="true" /> Yes
+                &nbsp;
+                <input type="radio" name="RelationshipActive" ng-model="CurrentSelection.Active" ng-value="false" /> No
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit" class="btn btn-sm btn-primary" ng-click="Update(CurrentSelection)">Save</button>
+                <button type="button" class="btn btn-sm btn-primary" ng-click="Reset()">Reset</button>
+                <button type="button" class="btn btn-sm btn-primary" ng-click="Cancel()">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

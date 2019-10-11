@@ -1,0 +1,75 @@
+﻿<div class="container no-print">
+    <h4><i class="fa fa-check-circle"></i> Case Plan</h4>
+    <!--<a href="javascript:window.print()" class="btn btn-xs btn-primary pull-right large" media="print"> Print Referral Details</a>-->
+</div>
+
+<div class="container no-print " ng-controller="CasePlanController">
+    <button type="button" class="btn btn-xs btn-primary" style="margin-bottom:10px;margin-top:10px;" ng-click="AddOrEditBCPPlan()">
+        Add Placement
+    </button>
+    <accordion>
+        <accordion close-others="false">
+            <accordion-group ng-repeat="bcpplan in BCPlans.slice(0)" is-open="isOpen" autoHeight="true">
+
+
+                <accordion-heading>
+                    <!--<span><i  style="cursor:pointer" class="fa fa-times" ng-click="deleteplacement(placement)"></i></span>-->
+
+                    <span><i style="cursor:pointer" class="fa fa-pencil-square-o" ng-click="EditBCPPlan(bcpplan, $event)"></i></span>
+
+
+                    {{ GenerateBCPPlanTitle(bcpplan) }}
+                    <i style="padding-left:5em"></i>
+                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isOpen, 'glyphicon-chevron-right': !isOpen}"></i>
+                    <button type="button" class="btn btn-xs btn-primary" style="margin-bottom:5px" ng-show="admin"
+                            ng-click="deleteBCPPlan(bcpplan)">
+                        Delete
+                    </button>
+                </accordion-heading>
+                <table st-table="service" ng-model="selectedPredicate" class="sttable table-striped" style="height:auto">
+                    <thead>
+                        <tr>
+                            <th>
+                                <button type="button" class="btn btn-xs btn-primary" style="margin-bottom:10px"
+                                        ng-click="AddOrEditBCPTargets(bcpplan, null, $event, 'New')">
+                                    Add BCP Targets
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="width:4%"></th>
+                            <th st-sort="Name" style="width:18%">Target </th>
+                            <th st-sort="beginDate" style="width:17%">GOAL</th>
+                            <!--<th st-sort="endDate">End Date</th>
+                            <th st-sort="casestatus">Case Status</th>-->
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <!--<tbody>
+                        <tr ng-repeat="row in bcpplan.BCPTargets">
+                            <td class="col-sm-1" style="width:10%">
+                                <i style="cursor:pointer" class="fa fa-pencil-square-o" ng-click="AddOrEditBCPTargets(row, row, $event, 'Edit')"></i>
+                                <span><i style="cursor:pointer" class="fa fa-print" ng-click="PrintPlacement(row, row, $event, 'Edit')"></i></span>
+                            </td>
+                            <td class="col-sm-2">{{row.BCPTargets.TargetDescription'}}</td>
+                            <td class="col-sm-2">{{row.BCPTargets.GOAL'}}</td>
+                            <td>
+                                <button type="button" class="btn btn-xs btn-primary" style="margin-bottom:5px" ng-show="admin"
+                                        ng-click="DeleteBCPTargets(row)">
+                                    Delete
+                                </button>
+                            </td>
+                                    
+                        </tr>
+                    </tbody>-->
+                </table>
+            </accordion-group>
+        </accordion>
+    </accordion>-->-->
+    <div class="col-sm-5" ng-show="CanShowBCPPlanMessage">
+        No Case Plan found 
+    </div>
+
+
+</div>
+

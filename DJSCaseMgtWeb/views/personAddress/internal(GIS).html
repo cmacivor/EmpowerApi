@@ -1,0 +1,64 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Use Bing Maps REST Services with jQuery to build an autocomplete box and find a location dynamically</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.1.js" type="text/javascript"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.js" type="text/javascript"></script>
+    <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        #searchBox {
+            width: 25em;
+        }
+    </style>
+</head>
+<body>
+   
+    <br />
+    <button type="button" class="btn btn-xs btn-primary" style="margin-bottom:10px;margin-top:10px;"
+            ng-click="FillAddressPoints()">
+        Update Points
+    </button>
+    <button type="button" class="btn btn-xs btn-primary" style="margin-bottom:10px;margin-top:10px;"
+            ng-click="Update()">
+        Update All
+    </button>
+    <div class="container">
+        <div ng-show="showMessage" >
+            <label class="text-center"><i class="fa fa-refresh fa-spin"></i>{{message}}</label>
+        </div>
+        <table st-table="displayed" st-safe-src="rowCollection" class="sttable table-striped search-table">
+            <thead>
+                <tr>
+                    <th  st-sort="PersonID">Person ID</th>
+                    <th st-sort="City">GIS Code</th>                    
+                    <th  st-sort="AddressLineOne">Address One</th>
+                    <th  st-sort="AddressLineTwo">Address Two</th>
+                    <th  st-sort="City">City</th>
+                    <th st-sort="State">State</th>
+                    <th st-sort="Zip">Zip</th>
+                </tr>
+            </thead>
+            <tbody ng-hide="isLoading">
+                <tr ng-repeat="row in AllInternalAddresses">
+                    <td width= "20%" class="col-sm-1">{{row.PersonID}}</td>
+                    <td class="col-sm-1">{{row.GISCode}}</td>                    
+                    <td class="col-sm-3">{{row.AddressLineOne}}</td>
+                    <td class="col-sm-2">{{row.AddressLineTwo}}</td>
+                    <td class="col-sm-2">{{row.City}}</td>
+                    <td class="col-sm-1">{{row.State}}</td>
+                    <td class="col-sm-1">{{row.Zip}}</td>
+                </tr>
+            </tbody>
+            <tbody ng-show="isLoading">
+                <tr>
+                    <td class="text-center">
+                        <div class="loading-indicator">
+                            <i class="fa fa-refresh fa-spin"></i>  Loading . . .
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

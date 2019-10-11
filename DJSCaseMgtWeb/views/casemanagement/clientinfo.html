@@ -1,0 +1,141 @@
+﻿
+
+
+<div class="container">
+ 
+</div>
+<div class="container" ng-controller="ClientInfoController">
+    <h4><i class="fa fa-check-circle"></i>{{title}}</h4>
+    <form class="form-horizontal" name="frmPerson" novalidate>
+         <div class="form-group">
+            <!--ng-class="{ 'has-error' : submitted && frmClientInfo.idCode.$invalid }"-->
+            <label class="col-sm-2 control-label">Last Name *</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="txtLastName" placeholder="Last Name"
+                       ng-model="Person.LastName" ng-required="true" />
+                       <!--typeahead-on-select="setPcode($item)"
+                       typeahead="lName.LastName as lName.LastName + ',' + lName.FirstName for lName in Persons| filter:{LastName:$viewValue}">-->
+            </div>
+            <label class="col-sm-2 control-label">First Name *</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="txtFirstName" placeholder="First Name"
+                       ng-model="Person.FirstName" required>
+            </div>
+           
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Middle Name </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="txtMiddleName" placeholder="Middle Name"
+                       ng-model="Person.MiddleName">
+            </div>
+
+           
+            <label class="col-sm-2 control-label">SSN </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="txtSSN"  placeholder="XXX-XX-XXXX"  ui-mask="999-99-9999"
+                       ng-model="Person.SSN" >
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{AssignNumber}} </label>
+            <div  ng-show="CanShowStateVCIN">
+               <div class="col-sm-3">
+                    <input type="text" class="form-control" name="txtFBINCIC" placeholder="FBI/NCIC Number "
+                           ng-model="Person.FBINCIC">
+                </div>
+            </div>
+            <div class="col-sm-3" ng-show="CanShowtxtJTS">
+                <input type="text" class="form-control" name="txtJTS" placeholder={{placeholdertext}}
+                       ng-model="Person.JTS" maxlength="15" numbers-only="numbers-Only" ng-required=xjts >
+            </div>
+            <label class="col-sm-2 control-label">Date of Birth *</label>
+            <div class="col-sm-2">
+                <div class="input-group" ng-class="{ 'has-error': frmPerson.txtDOB.$invalid }" >
+                    
+                    <input type="text" class="form-control" name="txtDOB" onkeyup="addSlashes(this);"
+                           ng-model="Person.DOB" required ng-change="GetAge()"
+                           datepicker-popup="MM/dd/yyyy" placeholder="MM/dd/yyyy"
+                           is-open="opened" datepicker-options="dateOptions"
+                           aw-datepicker-pattern="^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$"
+                             
+                           show-button-bar="false" datepickerpopup />
+                    <span class="input-group-btn">
+
+                        <button type="button" class="btn btn-default" ng-click="open($event)">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>                
+                   
+                </div>
+            </div>
+            <p ng-show="frmPerson.txtDOB.$invalid" class="help-block">
+                Enter a valid Date
+
+            </p>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Suffix </label>
+            <div class="col-sm-3">
+                <select ng-model="Person.Suffix" class="form-control btn btn-default dropdown-toggle"
+                        ng-options="item as item.Name for item in Suffixes track by item.ID">
+                    <option value="">Select Suffix</option>
+                </select>
+            </div>
+            <label class="col-sm-2 control-label">Current Age </label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control" name="txtAge" placeholder="Age"
+                        tabindex="-1" ng-model="Person.CurrentAge" readonly >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Race/Ethnicity * </label>
+            <div class="col-sm-3">
+                <select ng-model="Person.Race" class="form-control btn btn-default dropdown-toggle"
+                        tooltip-placement="bottom" tooltip-special="{{ Person.Race.Description }}"
+                        ng-options="item as item.Description for item in AllRaces|orderBy:'Description'  track by item.ID"  required >
+                    <option value="">Race/Ethnicity</option>
+                </select>
+            </div>
+            <label class="col-sm-2 control-label">
+             Gender *</label>
+            <div class="col-sm-3">
+                <select ng-model="Person.Gender" class="form-control btn btn-default dropdown-toggle"
+                        ng-options="item as item.Name for item in Genders track by item.ID" required>
+                    <option value="">Select Gender</option>
+                </select>
+            </div>
+        </div>
+        <!--ISR 1019-->
+        <div class="form-group" ng-show="CanShowStateVCIN">
+            <label class="col-sm-2 control-label">State/VCIN Number</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="txtStateORVCIN" placeholder="StateVCIN Number"
+                       ng-model="Person.StateORVCIN">
+            </div>
+        </div>
+        <div class="form-group" ng-show="CanShowAlias">
+            <label class="col-sm-2 control-label">Alias</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="txtAlias" placeholder="Alias"
+                       ng-model="Person.Alias">
+            </div>
+        </div>
+        <!--ISR 1019-->
+        <div class="modal-footer">
+           
+            <div class="col-sm-offset-8 col-sm-2-5">
+                <button type="submit" class="btn btn-sm btn-primary" ng-disabled="frmPerson.$invalid || !frmPerson.$dirty" ng-click="CreateOrUpdateClientInfo(!frmPerson.$invalid, Person)">{{ SubmitButtonText }}</button>
+                <button type="button" class="btn btn-sm btn-primary" ng-disabled="!frmPerson.$dirty" ng-show="CanShowReset" ng-click="Reset()">Reset</button>
+             
+                
+            </div>            
+        </div>
+        <div class="col-sm-10">
+            <span class="alert-warning">{{lblMsg}}</span>
+            <span class="alert-warning" style="font-style:italic">{{italicsmsg}}</span>
+        </div>
+    </form>
+</div>   
