@@ -33,6 +33,11 @@ namespace EmpowerApi.Controllers
         [HttpPost]
         public async Task<object> Create(T entity)
         {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+
             if (ModelState.IsValid)
             {
                 baseRepository.Create(entity);
@@ -46,8 +51,13 @@ namespace EmpowerApi.Controllers
         }
         
         [HttpPut]
-        public async Task<int> Update(T entity)
+        public async Task<object> Update(T entity)
         {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+
             if (ModelState.IsValid)
             {
                 baseRepository.Update(entity);
