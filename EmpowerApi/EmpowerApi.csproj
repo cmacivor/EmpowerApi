@@ -218,6 +218,7 @@
     <Compile Include="Controllers\AssessmentTypeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ServiceProgramCategoryController.cs" />
     <Compile Include="DataAccess\Repositories\ActionPlanRepository.cs" />
     <Compile Include="DataAccess\Repositories\AddressTypeRepository.cs" />
     <Compile Include="DataAccess\Repositories\AspNetusersRepository.cs" />
@@ -341,6 +342,7 @@
     <Folder Include="Views\AddressType\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Error\" />
+    <Folder Include="Views\ServiceProgramCategory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
