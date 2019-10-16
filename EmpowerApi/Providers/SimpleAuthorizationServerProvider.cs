@@ -114,32 +114,38 @@ namespace DJSCaseMgtService.Providers
                 {
                     context.SetError("invalid_grant", "Sorry, you are not authorized to access.");
                 }
-            }
 
-            var baseApiAddress = ConfigurationManager.AppSettings["BaseApiAddress"].ToString();
+               
+                var baseApiAddress = ConfigurationManager.AppSettings["BaseApiAddress"].ToString();
 
-            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
-            identity.AddClaim(new Claim("sub", context.UserName));
+                var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
+                identity.AddClaim(new Claim("sub", context.UserName));
 
-            var props = new AuthenticationProperties(new Dictionary<string, string>
-                {
-                    { 
-                        "as:client_id", (context.ClientId == null) ? string.Empty : context.ClientId
-                    },
-                    { 
-                        "userName", context.UserName
-                    },
+                var systemID = _repo.GetSystemIDByLoggedInUserRole();
+
+                var props = new AuthenticationProperties(new Dictionary<string, string>
                     {
-                        "baseApiAddress", baseApiAddress
-                    }
-                });
+                        { 
+                            "as:client_id", (context.ClientId == null) ? string.Empty : context.ClientId
+                        },
+                        { 
+                            "userName", context.UserName
+                        },
+                        {
+                            "baseApiAddress", baseApiAddress
+                        },
+                        {
+                            "systemID", systemID.ToString()
+                        },
+                    });
 
-            //TODO: is AuthenticationTicket necessary?
-            var ticket = new AuthenticationTicket(identity, props);
-            context.Validated(ticket);
+                //TODO: is AuthenticationTicket necessary?
+                var ticket = new AuthenticationTicket(identity, props);
+                context.Validated(ticket);
 
+            }
         }
         
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
