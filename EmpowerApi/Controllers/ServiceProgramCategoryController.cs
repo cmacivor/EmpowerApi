@@ -8,7 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 
-//TODO: need to refactor in here to remove the harcoded System IDs.
+
 namespace EmpowerApi.Controllers
 {
     public class ServiceProgramCategoryController : BaseController<ServiceProgramCategory>
@@ -20,10 +20,11 @@ namespace EmpowerApi.Controllers
         [HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
+            int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
             IEnumerable<ServiceProgramCategory> output = null;
             if (ModelState.IsValid)
             {
-                output = context.ServiceProgramCategory.Where(x => x.Active == true && x.SystemID == 2).ToList();
+                output = context.ServiceProgramCategory.Where(x => x.Active == true && x.SystemID == systemID).ToList();
             }
 
             return Ok(output);
@@ -33,6 +34,7 @@ namespace EmpowerApi.Controllers
         [HttpGet, Route("AllServiceProgramCategory")]
         public IEnumerable<ServiceProgramCategoryView> AllServiceProgramCategory()
         {
+            int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
 
             IEnumerable<ServiceProgramCategoryView> retVal = new List<ServiceProgramCategoryView>();
 
@@ -40,7 +42,7 @@ namespace EmpowerApi.Controllers
                from ServiceProgram sp,ServiceCategory sc,ServiceProgramCategory spc
                where sp.ID = spc.ServiceProgramID 
                and sc.ID = spc.ServiceCategoryID
-               and spc.Active = 1 and sc.SystemID = 2 ";
+               and spc.Active = 1 and sc.SystemID = "+ systemID;
 
             string SQL = ServiceProgramCategorySearch;
             SQL += " ORDER BY sp.Name";
@@ -67,6 +69,7 @@ namespace EmpowerApi.Controllers
         [HttpPost, Route("MeargeServiceCategory/{ServiceProgramID}/{ServiceCategoryID}")]
         public IHttpActionResult MeargeServiceCategory(int ServiceProgramID, int ServiceCategoryID)
         {
+            int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
             string result = String.Empty;
 
             if ((from t in context.ServiceProgramCategory
@@ -86,7 +89,7 @@ namespace EmpowerApi.Controllers
                     spCInsert.ServiceCategoryID = ServiceCategoryID;
                     spCInsert.ServiceProgramID = ServiceProgramID;
                     spCInsert.Active = true;
-                    spCInsert.SystemID = 2;
+                    spCInsert.SystemID = systemID;
                     spCInsert.CreatedDate = DateTime.Now;
                     spCInsert.CreatedBy = User.Identity.Name;
                     spCInsert.UpdatedDate = DateTime.Now;

@@ -218,7 +218,9 @@
     <Compile Include="Controllers\AssessmentTypeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ServiceCategoryController.cs" />
     <Compile Include="Controllers\ServiceProgramCategoryController.cs" />
+    <Compile Include="Controllers\ServiceProgramController.cs" />
     <Compile Include="DataAccess\Repositories\ActionPlanRepository.cs" />
     <Compile Include="DataAccess\Repositories\AddressTypeRepository.cs" />
     <Compile Include="DataAccess\Repositories\AspNetusersRepository.cs" />
