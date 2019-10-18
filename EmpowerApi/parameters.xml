@@ -2,6 +2,9 @@
   <parameter name="Environment" description="Enter one of the following environment values: development, staging, or production." defaultValue="__Environment__">
     <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='Environment']/@value" />
   </parameter>
+  <parameter name="BaseApiAddress" description="Enter the environment base URL." defaultValue="__BaseApiAddress__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='BaseApiAddress']/@value" />
+  </parameter>
   <parameter name="DJSCaseMgtContext" description="Enter a SqlClient connection string for the DJSCaseMgtContext Database Connection." defaultValue="__DJSCaseMgtContext__">
     <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/connectionStrings/add[@name='DJSCaseMgtContext']/@connectionString" />
   </parameter>

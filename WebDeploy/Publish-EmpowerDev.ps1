@@ -11,17 +11,16 @@
   This script requires CorDeploy 0.9.
 #>
 
-$applicationName1 = "EmpowerAdult"
-$applicationName2 = "EmpowerAdultApi"
+
+$applicationName2 = "EmpowerApi"
 
 $site = "justiceservicesdev"
 $appPool = "justiceservices_CommunityServices_4.0"
-$DevParamFile1 = "Parameters\Development\CommunityServices\EmpowerAdult.xml"
-$DevParamFile2 = "Parameters\Development\CommunityServices\EmpowerAdultApi.xml"
+
+$DevParamFile2 = "Parameters\Development\CommunityServices\EmpowerApi.xml"
 
 
 Import-Module CorDeploy
 
-New-CorDeploymentConfig $applicationName1 (Join-Path $WebDeployRoot $DevParamFile1) $site $appPool | Publish-CorWebApp -UseDevPackageSource
 New-CorDeploymentConfig $applicationName2 (Join-Path $WebDeployRoot $DevParamFile2) $site $appPool | Publish-CorWebApp -UseDevPackageSource
 
