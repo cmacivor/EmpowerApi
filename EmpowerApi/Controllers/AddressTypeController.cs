@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace EmpowerApi.Controllers
 {
     [RoutePrefix("api/AddressType")]
+    [EnableCors(origins: "https://justiceservicesdev.richva.ci.richmond.va.us", headers: "*", methods: "*")]
     public class AddressTypeController : BaseController<AddressType>
     {
         private DJSCaseMgtContext context = new DJSCaseMgtContext();
@@ -19,6 +21,7 @@ namespace EmpowerApi.Controllers
         }
 
         [HttpGet, Route("GetAll")]
+
         public IHttpActionResult GetAll()
         {
             IEnumerable<AddressType> output = null;
