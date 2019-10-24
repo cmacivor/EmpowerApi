@@ -215,9 +215,16 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AddressTypeController.cs" />
+    <Compile Include="Controllers\AssessmentSubTypeController.cs" />
     <Compile Include="Controllers\AssessmentTypeController.cs" />
+    <Compile Include="Controllers\AssistanceTypeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CareerPathwayController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\JobStatusController.cs" />
+    <Compile Include="Controllers\RaceController.cs" />
+    <Compile Include="Controllers\RelationshipController.cs" />
+    <Compile Include="Controllers\ServiceCategoryController.cs" />
     <Compile Include="Controllers\ServiceProgramCategoryController.cs" />
     <Compile Include="DataAccess\Repositories\ActionPlanRepository.cs" />
     <Compile Include="DataAccess\Repositories\AddressTypeRepository.cs" />

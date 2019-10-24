@@ -4,37 +4,31 @@ using DJSCaseMgtService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
 
 namespace EmpowerApi.Controllers
 {
-    [RoutePrefix("api/AddressType")]
-    //TODO: remove this? may not be necessary
-    [EnableCors(origins: "https://justiceservicesdev.richva.ci.richmond.va.us", headers: "*", methods: "*")]
-    public class AddressTypeController : BaseController<AddressType>
+    [RoutePrefix("api/Relationship")]
+    public class RelationshipController : BaseController<Relationship>
     {
         private DJSCaseMgtContext context = new DJSCaseMgtContext();
-
-        public AddressTypeController(IBaseRepository<AddressType> baseRepository) : base(baseRepository)
+        public RelationshipController(IBaseRepository<Relationship> context) : base(context)
         {
-
         }
 
         [HttpGet, Route("GetAll")]
-
         public IHttpActionResult GetAll()
         {
-            IEnumerable<AddressType> output = null;
+            IEnumerable<Relationship> output = null;
             if (ModelState.IsValid)
             {
-                output = context.AddressType.Where(x => x.Active == true).ToList();
+                output = context.Relationship.Where(x => x.Active == true).ToList();
             }
 
             return Ok(output);
         }
-
-
 
         [HttpGet, Route("Delete/{id:int}")]
         public IHttpActionResult Delete(int id)
@@ -42,10 +36,10 @@ namespace EmpowerApi.Controllers
             string result = "";
             if (ModelState.IsValid)
             {
-                var record = context.AddressType.Where(x => x.ID == id).FirstOrDefault();
+                var record = context.Relationship.Where(x => x.ID == id).FirstOrDefault();
                 if (record != null)
                 {
-                    context.AddressType.Remove(record);
+                    context.Relationship.Remove(record);
                 }
                 try
                 {
@@ -62,5 +56,6 @@ namespace EmpowerApi.Controllers
 
             return Ok(result);
         }
+
     }
 }

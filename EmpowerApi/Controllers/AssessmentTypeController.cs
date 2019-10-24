@@ -1,16 +1,10 @@
 ﻿using DJSCaseMgmtModel.Entities;
 using DJSCaseMgtService.DataAccess.Repositories;
 using DJSCaseMgtService.Models;
-using DJSCaseMgtService.oAuth;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Security;
 
 namespace EmpowerApi.Controllers
 {
@@ -40,7 +34,7 @@ namespace EmpowerApi.Controllers
 
 
 
-        [System.Web.Http.HttpGet, Route("Delete/{id:int}")]
+        [HttpGet, Route("Delete/{id:int}")]
         public IHttpActionResult Delete(int id)
         {
             string result = "";
