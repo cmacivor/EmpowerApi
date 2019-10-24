@@ -225,6 +225,7 @@
     <Compile Include="Controllers\RaceController.cs" />
     <Compile Include="Controllers\RelationshipController.cs" />
     <Compile Include="Controllers\ServiceCategoryController.cs" />
+    <Compile Include="Controllers\ServiceOutcomeController.cs" />
     <Compile Include="Controllers\ServiceProgramCategoryController.cs" />
     <Compile Include="DataAccess\Repositories\ActionPlanRepository.cs" />
     <Compile Include="DataAccess\Repositories\AddressTypeRepository.cs" />
