@@ -227,7 +227,6 @@
     <Compile Include="Controllers\RelationshipController.cs" />
     <Compile Include="Controllers\ServiceCategoryController.cs" />
     <Compile Include="Controllers\ServiceOutcomeController.cs" />
-    <Compile Include="Controllers\ServiceCategoryController.cs" />
     <Compile Include="Controllers\ServiceProgramCategoryController.cs" />
     <Compile Include="Controllers\ServiceProgramController.cs" />
     <Compile Include="Controllers\ServiceReleaseController.cs" />
