@@ -220,6 +220,7 @@
     <Compile Include="Controllers\AssistanceTypeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CareerPathwayController.cs" />
+    <Compile Include="Controllers\ClientProfileController.cs" />
     <Compile Include="Controllers\ContactTypeController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\JobStatusController.cs" />
