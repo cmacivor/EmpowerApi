@@ -17,5 +17,7 @@ namespace DJSCaseMgmtModel.ViewModels
         public string SSN { get; set; }
         public DateTime? DOB { get; set; }
         public string Gender { get; set; }
+
+        public string FormattedBirthDate => DOB?.ToString("d");
     }
 }
