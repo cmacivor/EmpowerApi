@@ -225,6 +225,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GenderController.cs" />
     <Compile Include="Controllers\JobStatusController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\RaceController.cs" />
     <Compile Include="Controllers\RelationshipController.cs" />
     <Compile Include="Controllers\ServiceCategoryController.cs" />
@@ -357,6 +358,7 @@
     <Folder Include="Views\AddressType\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Error\" />
+    <Folder Include="Views\Person\" />
     <Folder Include="Views\ServiceProgramCategory\" />
   </ItemGroup>
   <ItemGroup>

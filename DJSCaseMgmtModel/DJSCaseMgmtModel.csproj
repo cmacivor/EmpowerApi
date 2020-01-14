@@ -141,6 +141,7 @@
     <Compile Include="ViewModels\PlacementViewModel.cs" />
     <Compile Include="ViewModels\ServiceProgramCategory.cs" />
     <Compile Include="ViewModels\ServiceProgramView.cs" />
+    <Compile Include="ViewModels\Uniqids.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
