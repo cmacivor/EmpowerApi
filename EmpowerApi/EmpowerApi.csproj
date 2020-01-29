@@ -224,9 +224,12 @@
     <Compile Include="Controllers\ContactTypeController.cs" />
     <Compile Include="Controllers\EducationLevelController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FundingSourceController.cs" />
     <Compile Include="Controllers\GenderController.cs" />
     <Compile Include="Controllers\JobStatusController.cs" />
+    <Compile Include="Controllers\MaritalStatusController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\PropertyTypeController.cs" />
     <Compile Include="Controllers\RaceController.cs" />
     <Compile Include="Controllers\RelationshipController.cs" />
     <Compile Include="Controllers\ServiceCategoryController.cs" />
