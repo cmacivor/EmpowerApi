@@ -139,5 +139,14 @@ namespace EmpowerApi.Controllers
 
             return enrollmentVM;
         }
+
+
+        [System.Web.Http.HttpGet, Route("InActiveClients")]
+        public IEnumerable<ClientSearchResults> InActiveClients()
+        {
+            var retVal = _clientProfileRepository.InActiveClients();
+
+            return retVal;
+        }
     }
 }
