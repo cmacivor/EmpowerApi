@@ -90,7 +90,7 @@ namespace DJSCaseMgtService.DataAccess.Repositories
             	    Person p
             	    INNER JOIN ClientProfile cp ON cp.PersonID = p.ID
                 WHERE 
-                    cp.Active = 0 AND cp.SystemID = 3 " ;
+                    cp.Active = 0" ;
 
             string SQL = ClientSearch;
 
