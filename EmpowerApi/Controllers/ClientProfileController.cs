@@ -148,5 +148,30 @@ namespace EmpowerApi.Controllers
 
             return retVal;
         }
+
+        [System.Web.Http.HttpPost, Route("AdminDeleteClientProfile")]
+        public string DeleteMultipleClientsByAdmin(int[] ids)
+        {
+            try
+            {
+                foreach (int id in ids)
+                {
+                    var retVal = _clientProfileRepository.AdminDeleteClientProfile(id);
+                }
+                return "success";
+            }
+            catch (Exception e)
+            {
+                return "failed";
+            }
+        }
+
+        [System.Web.Http.HttpGet, Route("Activateclient/{id:int}")]
+        public string Activateclient(int id)
+        {
+            var retVal = _clientProfileRepository.Activateclient(id);
+
+            return retVal;
+        }
     }
 }
