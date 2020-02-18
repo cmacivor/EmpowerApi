@@ -173,5 +173,12 @@ namespace EmpowerApi.Controllers
 
             return retVal;
         }
+
+        [System.Web.Http.HttpGet, Route("DeleteClient/{id:int}")]
+        public string DeleteClientProfile(int id)
+        {
+            var retVal = _clientProfileRepository.DeleteClientProfile(id);
+            return retVal;
+        }
     }
 }

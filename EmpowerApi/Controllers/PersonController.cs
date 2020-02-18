@@ -31,13 +31,9 @@ namespace EmpowerApi.Controllers
 
                     person.SSN = DJSCaseMgtService.Utility.Function.Encryptdata(person.SSN);
                 }
-                //var jtsresult = context.Person.Where(x => x.JTS == person.JTS && x.JTS != "" && x.JTS != null).FirstOrDefault();
+
                 var ssnresult = context.Person.Where(x => x.SSN == person.SSN && x.SSN != "" && x.SSN != null).FirstOrDefault();
-
-                //if (jtsresult!=null  ) {
-                //    if (jtsresult.ID == person.ID) { jtsresult = null; }
-
-                //}
+                
                 if (ssnresult != null)
                 {
 
@@ -47,28 +43,17 @@ namespace EmpowerApi.Controllers
                     }
                 }
 
-
-                //if (jtsresult == null && ssnresult == null)
                 if (ssnresult == null)
                 {
 
                     person.UpdatedBy = User.Identity.Name;
 
-                    // person.SSN = Function.Encryptdata(person.SSN);
                     personRepository.Update(person);
 
                     await personRepository.Save();
                 }
                 else
-                {
-
-                    //if (jtsresult != null)
-                    //{
-
-                    //    String name = "JTS";
-
-                    //    return name;
-                    //}
+                {                  
                     if (ssnresult != null)
                     {
                         String name = "SSN";
