@@ -180,5 +180,14 @@ namespace EmpowerApi.Controllers
             var retVal = _clientProfileRepository.DeleteClientProfile(id);
             return retVal;
         }
+
+
+        [System.Web.Http.HttpGet, Route("SearchPlus")]
+        public IEnumerable<ClientSearchResults> Search21plus()
+        {
+            var retVal = _clientProfileRepository.Search21plus();
+
+            return retVal;
+        }
     }
 }
