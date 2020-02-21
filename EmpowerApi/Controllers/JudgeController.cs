@@ -16,21 +16,26 @@ using EmpowerApi.Controllers;
 
 namespace DJSCaseMgtService.Controllers
 {
-    [AllowAnonymous]
-    [RoutePrefix("api/Offense")]
-    public class OffenseController : BaseController<Offense>
+    [RoutePrefix("api/Judge")]
+
+    public class JudgeController : BaseController<Judge>
     {
+
+
         private DJSCaseMgtContext context = new DJSCaseMgtContext();
-        public OffenseController(IBaseRepository<Offense> baseRepository) : base(baseRepository) { }
+        public JudgeController(IBaseRepository<Judge> baseRepository) : base(baseRepository) { }
+
         #region "Service methods"
 
         [System.Web.Http.HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
-            IEnumerable<Offense> output = null;
+            int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
+
+            IEnumerable<Judge> output = null;
             if (ModelState.IsValid)
             {
-                output = context.Offense.Where(x => x.Active == true).ToList();
+                output = context.Judge.Where(x => x.Active == true && x.SystemID == systemID).OrderBy(x => x.Name).ToList();
             }
 
             return Ok(output);
@@ -44,10 +49,10 @@ namespace DJSCaseMgtService.Controllers
             string result = "";
             if (ModelState.IsValid)
             {
-                var record = context.Offense.Where(x => x.ID == id).FirstOrDefault();
+                var record = context.Judge.Where(x => x.ID == id).FirstOrDefault();
                 if (record != null)
                 {
-                    context.Offense.Remove(record);
+                    context.Judge.Remove(record);
                 }
                 try
                 {
@@ -67,5 +72,4 @@ namespace DJSCaseMgtService.Controllers
         #endregion
     }
 }
-
 
