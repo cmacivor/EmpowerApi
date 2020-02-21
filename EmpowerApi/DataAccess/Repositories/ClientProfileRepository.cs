@@ -113,7 +113,7 @@ namespace DJSCaseMgtService.DataAccess.Repositories
             return retVal;
         }
 
-        public IEnumerable<ClientSearchResults> Search(string lastname, string firstname)
+        public IEnumerable<ClientSearchResults> Search(string lastname, string firstname, int systemID)
         {
             IEnumerable<ClientSearchResults> retVal = new List<ClientSearchResults>();
 
@@ -127,8 +127,7 @@ namespace DJSCaseMgtService.DataAccess.Repositories
                 WHERE 
                     cp.Active = 1 AND
           
-                    cp.SystemID = 3 
-                     ";
+                    cp.SystemID = " + systemID + " ";
 
              if (firstname == null && lastname == null)
                  return null;
@@ -286,7 +285,7 @@ namespace DJSCaseMgtService.DataAccess.Repositories
     public interface IClientProfileRepository : IBaseRepository<ClientProfile>
     {
         Task<Object> GetClientProfile(int clientProfileId);
-        IEnumerable<ClientSearchResults> Search(string lastname, string firstname);
+        IEnumerable<ClientSearchResults> Search(string lastname, string firstname, int systemID);
 
         IEnumerable<ClientSearchResults> Search21plus();
 

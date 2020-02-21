@@ -1,6 +1,7 @@
 ﻿using DJSCaseMgmtModel.Entities;
 using DJSCaseMgmtModel.ViewModels;
 using DJSCaseMgtService.DataAccess.Repositories;
+using DJSCaseMgtService.oAuth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace EmpowerApi.Controllers
         private IEnrollmentRepository _enrollmentRepository;
         private IProgressNoteRepository _progressNoteRepository;
         private IServiceUnitRepository _serviceUnitRepository;
+
 
         public ClientProfileController(
             IClientProfileRepository clientProfileRepository, 
@@ -46,7 +48,11 @@ namespace EmpowerApi.Controllers
         [System.Web.Http.HttpPost, Route("Search")]
         public IEnumerable<ClientSearchResults> Search(ClientName name)
         {
-            var retVal = _clientProfileRepository.Search(name.LastName, name.FirstName);
+            //int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
+            var authRepository = new AuthRepository();
+            int systemID = authRepository.GetSystemIDByLoggedInUserRole();
+
+            var retVal = _clientProfileRepository.Search(name.LastName, name.FirstName, systemID);
             return retVal;
         }
 
