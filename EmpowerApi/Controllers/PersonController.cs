@@ -22,8 +22,6 @@ namespace EmpowerApi.Controllers
         [System.Web.Http.HttpPut]
         public async Task<object> Update(Person person)
         {
-
-
             if (ModelState.IsValid)
             {
                 if (person.SSN != null)
@@ -100,8 +98,40 @@ namespace EmpowerApi.Controllers
             {
                 return Ok("Failed");
             }
-
-
         }
+
+        [System.Web.Http.HttpGet, Route("GetduplicatePersons/{id}")]
+        public IEnumerable<dynamic> GetduplicatePersons(string id)
+        {
+            return (from p in context.Person
+                    join cp in context.ClientProfile on p.ID equals cp.PersonID
+                    where p.UniqueID.Contains(id) && cp.Active == true
+                    select new
+                    {
+                        p.ID,
+                        p.LastName,
+                        p.FirstName,
+                        p.MiddleName,
+                        p.SuffixID,
+                        p.Suffix,
+                        p.JTS,
+                        p.DOB,
+                        p.RaceID,
+                        p.Race,
+                        p.GenderID,
+                        p.Gender,
+                        p.SSN,
+                        p.FBINCIC,
+                        p.StateORVCIN,
+                        p.Alias,
+                        p.ICN,
+                        p.Active,
+                        p.UniqueID,
+                        p.tempFamilyProfileId,
+                        p.tempAddrID,
+                        ClientProfileID = cp.ID
+                    });
+        }
+
     }
 }
