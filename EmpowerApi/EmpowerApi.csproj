@@ -242,6 +242,7 @@
     <Compile Include="Controllers\ServiceReleaseController.cs" />
     <Compile Include="Controllers\SubContactTypeController.cs" />
     <Compile Include="Controllers\SuffixController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="DataAccess\Repositories\ActionPlanRepository.cs" />
     <Compile Include="DataAccess\Repositories\AddressTypeRepository.cs" />
     <Compile Include="DataAccess\Repositories\AspNetusersRepository.cs" />
