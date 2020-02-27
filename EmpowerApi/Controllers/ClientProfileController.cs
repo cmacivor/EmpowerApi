@@ -42,6 +42,7 @@ namespace EmpowerApi.Controllers
             _placementOffenseRepository = placementOffenseRepository;
             _enrollmentRepository = enrollmentRepository;
             _progressNoteRepository = progressNoteRepository;
+            _serviceUnitRepository = serviceUnitRepository;
         }
 
 
