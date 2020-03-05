@@ -133,5 +133,25 @@ namespace EmpowerApi.Controllers
                     });
         }
 
+
+        [System.Web.Http.HttpPost, Route("MeargePerson/{id}")]
+        public IHttpActionResult MeargePerson(int id, List<int> PersonIdList)
+        {
+            try
+            {
+                var rows = context.Placement.Where(x => PersonIdList.Contains(x.ClientProfileID)).ToList();
+                rows.ForEach(x =>
+                {
+                    x.ClientProfileID = id;
+                });
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
+            return Ok("Success");
+        }
+
     }
 }

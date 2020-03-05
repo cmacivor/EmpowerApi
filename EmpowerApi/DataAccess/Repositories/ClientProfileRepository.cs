@@ -119,14 +119,19 @@ namespace DJSCaseMgtService.DataAccess.Repositories
 
              string ClientSearch =
                 @"SELECT 
-            	    cp.ID, p.LastName, p.FirstName, p.MiddleName, p.JTS, p.SSN, p.StateORVCIN, p.DOB, 
+            	    cp.ID,
+                    p.ID as PersonID,
+                    p.LastName,
+                    p.FirstName,
+                    p.MiddleName, 
+                    p.JTS, p.SSN,
+                    p.StateORVCIN, p.DOB, 
             	    (SELECT Name FROM Gender WHERE ID = p.GenderID) as Gender
                 FROM 
             	    Person p
             	    INNER JOIN ClientProfile cp ON cp.PersonID = p.ID
                 WHERE 
                     cp.Active = 1 AND
-          
                     cp.SystemID = " + systemID + " ";
 
              if (firstname == null && lastname == null)
