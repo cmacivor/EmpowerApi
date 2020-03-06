@@ -137,6 +137,7 @@ namespace EmpowerApi.Controllers
         {
             try
             {
+                //Placements are created on the Referral tab
                 var rows = context.Placement.Where(x => data.PersonIdList.Contains(x.ClientProfileID)).ToList();
                 rows.ForEach(x =>
                 {

@@ -188,6 +188,23 @@ namespace EmpowerApi.Controllers
             return retVal;
         }
 
+        [System.Web.Http.HttpPost, Route("DeleteMultipleClients")]
+        public string DeleteMultipleClients(int[] ids)
+        {
+            try
+            {
+                foreach (int id in ids)
+                {
+                    var retVal = _clientProfileRepository.DeleteClientProfile(id);
+                }
+                return "success";
+            }
+            catch (Exception e)
+            {
+                return "failed";
+            }
+        }
+
 
         [System.Web.Http.HttpGet, Route("SearchPlus")]
         public IEnumerable<ClientSearchResults> Search21plus()
