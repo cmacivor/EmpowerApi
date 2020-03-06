@@ -133,16 +133,14 @@ namespace EmpowerApi.Controllers
                     });
         }
 
-
-        [System.Web.Http.HttpPost, Route("MeargePerson/{id}")]
-        public IHttpActionResult MeargePerson(int id, List<int> PersonIdList)
+       public IHttpActionResult MeargePerson(MergePersonPostData data)
         {
             try
             {
-                var rows = context.Placement.Where(x => PersonIdList.Contains(x.ClientProfileID)).ToList();
+                var rows = context.Placement.Where(x => data.PersonIdList.Contains(x.ClientProfileID)).ToList();
                 rows.ForEach(x =>
                 {
-                    x.ClientProfileID = id;
+                    x.ClientProfileID = data.id;
                 });
                 context.SaveChanges();
             }
@@ -152,6 +150,12 @@ namespace EmpowerApi.Controllers
             }
             return Ok("Success");
         }
+    }
 
+    public class MergePersonPostData
+    {
+        public int id { get; set; }
+
+        public List<int> PersonIdList { get; set; }
     }
 }
