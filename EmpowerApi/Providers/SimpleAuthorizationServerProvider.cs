@@ -12,6 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using static DJSCaseMgtService.oAuth.AuthRepository;
 
 namespace DJSCaseMgtService.Providers
 {
@@ -125,6 +126,9 @@ namespace DJSCaseMgtService.Providers
 
                 var systemID = _repo.GetSystemIDByLoggedInUserRole();
 
+                var roleId = UserDetails.role.Roles.FirstOrDefault().RoleId;
+               
+
                 var props = new AuthenticationProperties(new Dictionary<string, string>
                     {
                         { 
@@ -139,6 +143,10 @@ namespace DJSCaseMgtService.Providers
                         {
                             "systemID", systemID.ToString()
                         },
+                        {
+                            "roleID", roleId
+                        }
+
                     });
 
                 //TODO: is AuthenticationTicket necessary?
