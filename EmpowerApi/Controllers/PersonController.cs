@@ -2,6 +2,9 @@
 using DJSCaseMgmtModel.ViewModels;
 using DJSCaseMgtService.DataAccess.Repositories;
 using DJSCaseMgtService.Models;
+using DJSCaseMgtService.oAuth;
+using DJSCaseMgtService.Utility;
+using EmpowerApi.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,54 +20,114 @@ namespace EmpowerApi.Controllers
     {
         private IPersonRepository personRepository;
         private DJSCaseMgtContext context = new DJSCaseMgtContext();
+        private AuthRepository _authRepository;
 
+        public PersonController()
+        {
+            _authRepository = new AuthRepository();
+        }
 
         [System.Web.Http.HttpPut]
         public async Task<object> Update(Person person)
         {
             if (ModelState.IsValid)
             {
-                if (person.SSN != null)
+                int systemID = _authRepository.GetSystemIDByLoggedInUserRole();
+
+                if (systemID == Convert.ToInt32(EmpowerSystem.Juvenile))
                 {
-
-                    person.SSN = DJSCaseMgtService.Utility.Function.Encryptdata(person.SSN);
+                    return await HandleUpdateForJuvenile(person);
                 }
 
-                var ssnresult = context.Person.Where(x => x.SSN == person.SSN && x.SSN != "" && x.SSN != null).FirstOrDefault();
-                
-                if (ssnresult != null)
-                {
-
-                    if (ssnresult.ID == person.ID)
-                    {
-                        ssnresult = null;
-                    }
-                }
-
-                if (ssnresult == null)
-                {
-
-                    person.UpdatedBy = User.Identity.Name;
-
-                    personRepository.Update(person);
-
-                    await personRepository.Save();
-                }
-                else
-                {                  
-                    if (ssnresult != null)
-                    {
-                        String name = "SSN";
-                        return name;
-                    }
-
-                }
-
-
-                return person.ID;
+                return await HandleUpdateForAdultAndCWB(person);
             }
 
             return 0;
+        }
+
+        private async Task<object> HandleUpdateForJuvenile(Person person)
+        {
+            if (person.SSN != null)
+            {
+                person.SSN = Function.Encryptdata(person.SSN);
+            }
+            var jtsresult = context.Person.Where(x => x.JTS == person.JTS && x.JTS != "" && x.JTS != null).FirstOrDefault();
+            var ssnresult = context.Person.Where(x => x.SSN == person.SSN && x.SSN != "" && x.SSN != null).FirstOrDefault();
+
+            if (jtsresult != null)
+            {
+                if (jtsresult.ID == person.ID) { jtsresult = null; }
+            }
+            if (ssnresult != null)
+            {
+                if (ssnresult.ID == person.ID)
+                {
+                    ssnresult = null;
+                }
+            }
+
+            if (jtsresult == null && ssnresult == null)
+            {
+                person.UpdatedBy = User.Identity.Name;
+
+                // person.SSN = Function.Encryptdata(person.SSN);
+                personRepository.Update(person);
+
+                await personRepository.Save();
+            }
+            else
+            {
+                if (jtsresult != null)
+                {
+                    String name = "JTS";
+
+                    return name;
+                }
+                if (ssnresult != null)
+                {
+                    String name = "SSN";
+                    return name;
+                }
+            }
+
+            return person.ID;
+        }
+
+        private async Task<object> HandleUpdateForAdultAndCWB(Person person)
+        {
+            if (person.SSN != null)
+            {
+                person.SSN = DJSCaseMgtService.Utility.Function.Encryptdata(person.SSN);
+            }
+
+            var ssnresult = context.Person.Where(x => x.SSN == person.SSN && x.SSN != "" && x.SSN != null).FirstOrDefault();
+
+            if (ssnresult != null)
+            {
+                if (ssnresult.ID == person.ID)
+                {
+                    ssnresult = null;
+                }
+            }
+
+            if (ssnresult == null)
+            {
+                person.UpdatedBy = User.Identity.Name;
+
+                personRepository.Update(person);
+
+                await personRepository.Save();
+            }
+            else
+            {
+                if (ssnresult != null)
+                {
+                    String name = "SSN";
+                    return name;
+                }
+            }
+
+            return person.ID;
         }
 
         //duplicate unique ids
