@@ -18,12 +18,17 @@ namespace EmpowerApi.Controllers
     [RoutePrefix("api/Person")]
     public class PersonController : ApiController
     {
-        private IPersonRepository personRepository;
+        private IPersonRepository _personRepository;
+        private IClientProfileRepository _clientProfileRepository;
+        private IPersonSupplementalRepository _personSupplementalRepository;
         private DJSCaseMgtContext context = new DJSCaseMgtContext();
         private AuthRepository _authRepository;
 
-        public PersonController()
+        public PersonController(IPersonRepository personRepository, IPersonSupplementalRepository personSupplementalRepository, IClientProfileRepository clientProfileRepository)
         {
+            _personRepository = personRepository;
+            _clientProfileRepository = clientProfileRepository;
+            _personSupplementalRepository = personSupplementalRepository;
             _authRepository = new AuthRepository();
         }
 
@@ -44,6 +49,81 @@ namespace EmpowerApi.Controllers
 
             return 0;
         }
+
+
+        [System.Web.Http.HttpPost, Route("")]
+        public async Task<object> Create(Person person)
+        {
+            int systemID = _authRepository.GetSystemIDByLoggedInUserRole();
+
+            ClientProfile clientProfile = new ClientProfile
+            {
+                SystemID = systemID,
+                Active = true,
+                UpdatedBy = User.Identity.Name,
+                CreatedBy = User.Identity.Name,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            if (ModelState.IsValid)
+            {
+                if (person.SSN != null)
+                {
+                    person.SSN = Function.Encryptdata(person.SSN);
+                }
+
+                var ssnresult = context.Person.Where(x => x.SSN == person.SSN && x.SSN != null && x.SSN != "").FirstOrDefault();
+
+                if (ssnresult == null)
+                {
+                    person.CreatedBy = User.Identity.Name;
+
+                    //Create Person
+                    _personRepository.Create(person);
+                    var retVal = await _personRepository.Save();
+
+                    if (person.ID != 0)
+                    {
+                        // Create New ClientProfile
+                        clientProfile.PersonID = person.ID;
+                        clientProfile.CreatedDate = DateTime.Now;
+                        clientProfile.UpdatedDate = DateTime.Now;
+                        clientProfile.UpdatedBy = User.Identity.Name;
+                        clientProfile.CreatedBy = User.Identity.Name;
+                        _clientProfileRepository.Create(clientProfile);
+                        var cpVal = await _clientProfileRepository.Save();
+
+                        // Create New PersonSupplemental
+                        PersonSupplemental personSupplemental = new PersonSupplemental
+                        {
+                            PersonID = person.ID,
+                            Active = true,
+                            UpdatedBy = User.Identity.Name,
+                            CreatedBy = User.Identity.Name,
+                            CreatedDate = DateTime.Now,
+                            UpdatedDate = DateTime.Now
+                        };
+                        _personSupplementalRepository.Create(personSupplemental);
+                        var psVal = await _personSupplementalRepository.Save();
+                    }
+                   
+                    return clientProfile;
+                }
+                else
+                {                  
+                    if (ssnresult != null)
+                    {
+                        String name = "SSN";
+                        return name;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+
 
         private async Task<object> HandleUpdateForJuvenile(Person person)
         {
@@ -71,9 +151,9 @@ namespace EmpowerApi.Controllers
                 person.UpdatedBy = User.Identity.Name;
 
                 // person.SSN = Function.Encryptdata(person.SSN);
-                personRepository.Update(person);
+                _personRepository.Update(person);
 
-                await personRepository.Save();
+                await _personRepository.Save();
             }
             else
             {
@@ -114,9 +194,9 @@ namespace EmpowerApi.Controllers
             {
                 person.UpdatedBy = User.Identity.Name;
 
-                personRepository.Update(person);
+                _personRepository.Update(person);
 
-                await personRepository.Save();
+                await _personRepository.Save();
             }
             else
             {
