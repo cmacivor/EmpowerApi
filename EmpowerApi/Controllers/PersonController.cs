@@ -32,7 +32,7 @@ namespace EmpowerApi.Controllers
             _authRepository = new AuthRepository();
         }
 
-        [System.Web.Http.HttpPut]
+        [System.Web.Http.HttpPut, Route("")]
         public async Task<object> Update(Person person)
         {
             if (ModelState.IsValid)
@@ -107,6 +107,9 @@ namespace EmpowerApi.Controllers
                         _personSupplementalRepository.Create(personSupplemental);
                         var psVal = await _personSupplementalRepository.Save();
                     }
+
+                    //decrypt it again for display
+                    clientProfile.Person.SSN = Function.Decryptdata(clientProfile.Person.SSN);
                    
                     return clientProfile;
                 }
