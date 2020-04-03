@@ -56,6 +56,8 @@ namespace EmpowerApi.Controllers
         {
             int systemID = _authRepository.GetSystemIDByLoggedInUserRole();
 
+            Person jtsResult;
+
             ClientProfile clientProfile = new ClientProfile
             {
                 SystemID = systemID,
@@ -73,54 +75,58 @@ namespace EmpowerApi.Controllers
                     person.SSN = Function.Encryptdata(person.SSN);
                 }
 
+
+                jtsResult = context.Person.Where(x => x.JTS == person.JTS && x.JTS != "" && x.JTS != null).FirstOrDefault();
+
+                if (systemID == Convert.ToInt32(EmpowerSystem.Juvenile) && jtsResult != null)
+                {
+                    return "JTS";
+                }
+
                 var ssnresult = context.Person.Where(x => x.SSN == person.SSN && x.SSN != null && x.SSN != "").FirstOrDefault();
 
-                if (ssnresult == null)
+                if (ssnresult != null)
                 {
-                    person.CreatedBy = User.Identity.Name;
+                    return "SSN";
+                }
 
-                    //Create Person
-                    _personRepository.Create(person);
-                    var retVal = await _personRepository.Save();
+               
+                person.CreatedBy = User.Identity.Name;
 
-                    if (person.ID != 0)
+                //Create Person
+                _personRepository.Create(person);
+                var retVal = await _personRepository.Save();
+
+                if (person.ID != 0)
+                {
+                    // Create New ClientProfile
+                    clientProfile.PersonID = person.ID;
+                    clientProfile.CreatedDate = DateTime.Now;
+                    clientProfile.UpdatedDate = DateTime.Now;
+                    clientProfile.UpdatedBy = User.Identity.Name;
+                    clientProfile.CreatedBy = User.Identity.Name;
+                    _clientProfileRepository.Create(clientProfile);
+                    var cpVal = await _clientProfileRepository.Save();
+
+                    // Create New PersonSupplemental
+                    PersonSupplemental personSupplemental = new PersonSupplemental
                     {
-                        // Create New ClientProfile
-                        clientProfile.PersonID = person.ID;
-                        clientProfile.CreatedDate = DateTime.Now;
-                        clientProfile.UpdatedDate = DateTime.Now;
-                        clientProfile.UpdatedBy = User.Identity.Name;
-                        clientProfile.CreatedBy = User.Identity.Name;
-                        _clientProfileRepository.Create(clientProfile);
-                        var cpVal = await _clientProfileRepository.Save();
+                        PersonID = person.ID,
+                        Active = true,
+                        UpdatedBy = User.Identity.Name,
+                        CreatedBy = User.Identity.Name,
+                        CreatedDate = DateTime.Now,
+                        UpdatedDate = DateTime.Now
+                    };
+                    _personSupplementalRepository.Create(personSupplemental);
+                    var psVal = await _personSupplementalRepository.Save();
+                }
 
-                        // Create New PersonSupplemental
-                        PersonSupplemental personSupplemental = new PersonSupplemental
-                        {
-                            PersonID = person.ID,
-                            Active = true,
-                            UpdatedBy = User.Identity.Name,
-                            CreatedBy = User.Identity.Name,
-                            CreatedDate = DateTime.Now,
-                            UpdatedDate = DateTime.Now
-                        };
-                        _personSupplementalRepository.Create(personSupplemental);
-                        var psVal = await _personSupplementalRepository.Save();
-                    }
-
-                    //decrypt it again for display
-                    clientProfile.Person.SSN = Function.Decryptdata(clientProfile.Person.SSN);
+                //decrypt it again for display
+                clientProfile.Person.SSN = Function.Decryptdata(clientProfile.Person.SSN);
                    
-                    return clientProfile;
-                }
-                else
-                {                  
-                    if (ssnresult != null)
-                    {
-                        String name = "SSN";
-                        return name;
-                    }
-                }
+                return clientProfile;
+                
             }
 
             return null;
@@ -134,6 +140,7 @@ namespace EmpowerApi.Controllers
             {
                 person.SSN = Function.Encryptdata(person.SSN);
             }
+
             var jtsresult = context.Person.Where(x => x.JTS == person.JTS && x.JTS != "" && x.JTS != null).FirstOrDefault();
             var ssnresult = context.Person.Where(x => x.SSN == person.SSN && x.SSN != "" && x.SSN != null).FirstOrDefault();
 
