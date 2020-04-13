@@ -14,20 +14,19 @@ namespace DJSCaseMgtService.Controllers
     [RoutePrefix("api/PersonSupplemental")]
     public class PersonSupplementalController : BaseController<PersonSupplemental>
     {
-        private DJSCaseMgtContext context;
+        private DJSCaseMgtContext context = new DJSCaseMgtContext();
         public PersonSupplementalController(IBaseRepository<PersonSupplemental> baseRepository) : base(baseRepository) { }
 
 
 
         [HttpGet, Route("GetByPersonID/{personID}")]
-        public PersonSupplemental GetByPersonID(int personID)
+        public PersonSupplemental GetByPersonID(int? personID)
         {
-            using (var context = new DJSCaseMgtContext())
-            {
-                var personSupplemental = context.PersonSupplemental.FirstOrDefault(x => x.PersonID == personID);
+            if (personID == null) return null;
 
-                return personSupplemental;
-            }
+            var personSupplemental = context.PersonSupplemental.FirstOrDefault(x => x.PersonID == personID);
+
+            return personSupplemental;
         }
     }
 
