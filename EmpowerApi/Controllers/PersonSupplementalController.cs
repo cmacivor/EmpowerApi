@@ -7,12 +7,29 @@ using System.Web.Http;
 using DJSCaseMgtService.DataAccess.Repositories;
 using DJSCaseMgmtModel.Entities;
 using EmpowerApi.Controllers;
+using DJSCaseMgtService.Models;
 
 namespace DJSCaseMgtService.Controllers
 {
     [RoutePrefix("api/PersonSupplemental")]
     public class PersonSupplementalController : BaseController<PersonSupplemental>
     {
+        private DJSCaseMgtContext context;
         public PersonSupplementalController(IBaseRepository<PersonSupplemental> baseRepository) : base(baseRepository) { }
+
+
+
+        [HttpGet, Route("GetByPersonID/{personID}")]
+        public PersonSupplemental GetByPersonID(int personID)
+        {
+            using (var context = new DJSCaseMgtContext())
+            {
+                var personSupplemental = context.PersonSupplemental.FirstOrDefault(x => x.PersonID == personID);
+
+                return personSupplemental;
+            }
+        }
     }
+
+   
 }
