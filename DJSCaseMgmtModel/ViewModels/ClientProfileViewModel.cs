@@ -24,5 +24,11 @@ namespace DJSCaseMgmtModel.ViewModels
 
         public IEnumerable<MaritalStatus> MaritalStatuses { get; set; }
 
+        public IEnumerable<Gender> Genders { get; set; }
+
+        public IEnumerable<Race> Races { get; set; }
+
+        public IEnumerable<Suffix> Suffixes { get; set; }
+
     }
 }

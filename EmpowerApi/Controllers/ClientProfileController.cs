@@ -61,7 +61,7 @@ namespace EmpowerApi.Controllers
 
 
         [System.Web.Http.HttpGet, Route("{id}")]
-        public async Task<Object> GetClientProfile(int id)
+        public async Task<ClientProfileViewModel> GetClientProfile(int id)
         {
             try
             {
@@ -90,6 +90,12 @@ namespace EmpowerApi.Controllers
                 cp.JobStatuses = context.JobStatus.ToList();
 
                 cp.MaritalStatuses = context.MaritalStatus.ToList();
+
+                cp.Races = context.Race.ToList();
+
+                cp.Genders = context.Gender.ToList();
+
+                cp.Suffixes = context.Suffix.ToList();
 
                 return cp;
 
