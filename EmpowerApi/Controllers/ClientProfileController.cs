@@ -1,6 +1,7 @@
 ﻿using DJSCaseMgmtModel.Entities;
 using DJSCaseMgmtModel.ViewModels;
 using DJSCaseMgtService.DataAccess.Repositories;
+using DJSCaseMgtService.Models;
 using DJSCaseMgtService.oAuth;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace EmpowerApi.Controllers
         private IEnrollmentRepository _enrollmentRepository;
         private IProgressNoteRepository _progressNoteRepository;
         private IServiceUnitRepository _serviceUnitRepository;
+        private DJSCaseMgtContext context = new DJSCaseMgtContext();
 
 
         public ClientProfileController(
@@ -80,6 +82,14 @@ namespace EmpowerApi.Controllers
 
                 // Load Placement(s) for ClientProfileId            
                 cp.Placement = GetPlacementsForClientProfile(id);
+
+                cp.EducationLevels = context.EducationLevel.ToList();
+
+                cp.FundingSources = context.FundingSource.ToList();
+
+                cp.JobStatuses = context.JobStatus.ToList();
+
+                cp.MaritalStatuses = context.MaritalStatus.ToList();
 
                 return cp;
 

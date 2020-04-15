@@ -16,5 +16,13 @@ namespace DJSCaseMgmtModel.ViewModels
 
         public IEnumerable<PlacementViewModel> Placement { get; set; }
 
+        public IEnumerable<EducationLevel> EducationLevels { get; set; }
+
+        public IEnumerable<FundingSource> FundingSources { get; set; }
+
+        public IEnumerable<JobStatus> JobStatuses { get; set; }
+
+        public IEnumerable<MaritalStatus> MaritalStatuses { get; set; }
+
     }
 }
