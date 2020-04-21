@@ -24,8 +24,15 @@ namespace DJSCaseMgtService.Controllers
         {
             if (personID == null) return null;
 
-            var personSupplemental = context.PersonSupplemental.FirstOrDefault(x => x.PersonID == personID);
+            var personSupplemental = new PersonSupplemental();
 
+            var result = context.PersonSupplemental.FirstOrDefault(x => x.PersonID == personID);
+
+            if (result != null)
+            {
+                return result;
+            }
+           
             return personSupplemental;
         }
     }
