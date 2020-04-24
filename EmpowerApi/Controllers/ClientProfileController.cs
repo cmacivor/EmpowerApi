@@ -51,7 +51,6 @@ namespace EmpowerApi.Controllers
         [System.Web.Http.HttpPost, Route("Search")]
         public IEnumerable<ClientSearchResults> Search(ClientName name)
         {
-            //int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
             var authRepository = new AuthRepository();
             int systemID = authRepository.GetSystemIDByLoggedInUserRole();
 
@@ -225,7 +224,10 @@ namespace EmpowerApi.Controllers
         [System.Web.Http.HttpGet, Route("SearchPlus")]
         public IEnumerable<ClientSearchResults> Search21plus()
         {
-            var retVal = _clientProfileRepository.Search21plus();
+            var authRepository = new AuthRepository();
+            int systemID = authRepository.GetSystemIDByLoggedInUserRole();
+
+            var retVal = _clientProfileRepository.Search21plus(systemID);
 
             return retVal;
         }

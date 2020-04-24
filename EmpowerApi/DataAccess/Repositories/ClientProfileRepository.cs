@@ -38,7 +38,7 @@ namespace DJSCaseMgtService.DataAccess.Repositories
            
         }
 
-        public IEnumerable<ClientSearchResults> Search21plus()
+        public IEnumerable<ClientSearchResults> Search21plus(int systemID)
         {
             IEnumerable<ClientSearchResults> retVal = new List<ClientSearchResults>();
 
@@ -53,7 +53,7 @@ namespace DJSCaseMgtService.DataAccess.Repositories
                     cp.Active = 1 AND
                     datediff(day,p.DOB,getDate())>7670 AND
                  
-                    cp.SystemID = 3 ";
+                    cp.SystemID = @systemID";
 
 
            
@@ -61,7 +61,7 @@ namespace DJSCaseMgtService.DataAccess.Repositories
 
 
             SQL += " ORDER BY p.LastName, p.FirstName";
-            retVal = context.Database.SqlQuery<ClientSearchResults>(SQL).ToList();
+            retVal = context.Database.SqlQuery<ClientSearchResults>(SQL, new SqlParameter("@systemID", systemID)).ToList();
             //  Decrypted SSN
             retVal.ToList().ForEach(
                 x =>
@@ -292,7 +292,7 @@ namespace DJSCaseMgtService.DataAccess.Repositories
         Task<Object> GetClientProfile(int clientProfileId);
         IEnumerable<ClientSearchResults> Search(string lastname, string firstname, int systemID);
 
-        IEnumerable<ClientSearchResults> Search21plus();
+        IEnumerable<ClientSearchResults> Search21plus(int systemID);
 
         IEnumerable<ClientSearchResults> InActiveClients();
         IEnumerable<Person> GetAllPersonsWithNoClientProfile();
