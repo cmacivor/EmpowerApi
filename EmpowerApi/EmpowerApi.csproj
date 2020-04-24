@@ -234,6 +234,7 @@
     <Compile Include="Controllers\PropertyTypeController.cs" />
     <Compile Include="Controllers\RaceController.cs" />
     <Compile Include="Controllers\RelationshipController.cs" />
+    <Compile Include="Controllers\SchoolController.cs" />
     <Compile Include="Controllers\ServiceCategoryController.cs" />
     <Compile Include="Controllers\ServiceOutcomeController.cs" />
     <Compile Include="Controllers\ServiceProgramCategoryController.cs" />
