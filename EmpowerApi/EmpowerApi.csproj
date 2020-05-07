@@ -229,6 +229,7 @@
     <Compile Include="Controllers\JudgeController.cs" />
     <Compile Include="Controllers\MaritalStatusController.cs" />
     <Compile Include="Controllers\OffenseController.cs" />
+    <Compile Include="Controllers\PersonAddressController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\PersonSupplementalController.cs" />
     <Compile Include="Controllers\PropertyTypeController.cs" />
