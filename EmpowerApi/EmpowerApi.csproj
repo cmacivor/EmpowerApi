@@ -223,6 +223,7 @@
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EducationLevelController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FamilyProfileController.cs" />
     <Compile Include="Controllers\FundingSourceController.cs" />
     <Compile Include="Controllers\GenderController.cs" />
     <Compile Include="Controllers\JobStatusController.cs" />
