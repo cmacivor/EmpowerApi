@@ -77,7 +77,8 @@ namespace DJSCaseMgtService.Controllers
             return null;
         }
 
-        [System.Web.Http.HttpPut, Route("{id:int}")]
+        //[System.Web.Http.HttpPut, Route("{id:int}")]
+        [System.Web.Http.HttpPut, Route("")]
         public async Task<object> Update(FamilyProfileViewModel familyProfileVM)
         {
 

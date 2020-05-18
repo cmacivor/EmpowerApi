@@ -188,6 +188,13 @@ namespace EmpowerApi.Controllers
             }
         }
 
+        [System.Web.Http.HttpGet, Route("FamilyProfile/{id:int}")]
+        public IEnumerable<FamilyProfileViewModel> GetFamilyProfilesForPerson(int id)
+        {
+            IEnumerable<FamilyProfileViewModel> familyProfiles = _personRepository.GetFamilyProfileForPerson(id);
+            return familyProfiles;
+        }
+
         [System.Web.Http.HttpGet, Route("Activateclient/{id:int}")]
         public string Activateclient(int id)
         {
