@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Web.Http;
 
 namespace EmpowerApi.Controllers
@@ -30,6 +31,22 @@ namespace EmpowerApi.Controllers
 
             return Ok(output);
         }
+
+
+        [HttpGet, Route("GetByPersonID/{id:int}")]
+        //[HttpGet, Route("")]
+        public IHttpActionResult GetByPersonID(int id)
+        {
+            var personAddress = context.PersonAddress.FirstOrDefault(x => x.PersonID == id);
+
+            if (personAddress ==null)
+            {
+                return NotFound();
+            }
+
+            return Ok(personAddress);
+        }
+
         #endregion
     }
 }
