@@ -234,6 +234,7 @@
     <Compile Include="Controllers\PersonAddressController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\PersonSupplementalController.cs" />
+    <Compile Include="Controllers\PlacementController.cs" />
     <Compile Include="Controllers\PropertyTypeController.cs" />
     <Compile Include="Controllers\RaceController.cs" />
     <Compile Include="Controllers\RelationshipController.cs" />
