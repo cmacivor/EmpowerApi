@@ -90,6 +90,16 @@ namespace DJSCaseMgtService.Controllers
             return placementVM;
         }
 
+        [System.Web.Http.HttpGet, Route("GetPlacement/{id:int}")]
+        public Placement GetPlacement(int id)
+        {
+            var placement = placementRepository.GetPlacement(id);
+
+            return placement;
+        }
+
+
+
         [System.Web.Http.HttpGet, Route("Deleteplacement/{id:int}")]
         public string Deleteplacement(int id)
         {

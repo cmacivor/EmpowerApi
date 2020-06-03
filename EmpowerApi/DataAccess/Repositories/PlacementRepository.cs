@@ -3,6 +3,7 @@ using DJSCaseMgmtModel.ViewModels;
 using DJSCaseMgtService.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,13 @@ namespace DJSCaseMgtService.DataAccess.Repositories
                               select p).AsEnumerable();
 
             return placements;
+        }
+
+        public Placement GetPlacement(int id)
+        {
+            var placement = context.Placement.FirstOrDefault(x => x.ID == id);
+
+            return placement;
         }
 
         public string DeletePlacement(int id)
@@ -67,9 +75,11 @@ namespace DJSCaseMgtService.DataAccess.Repositories
 
 
 
-public interface IPlacementRepository : IBaseRepository<Placement>
+    public interface IPlacementRepository : IBaseRepository<Placement>
     {
         IEnumerable<Placement> GetPlacementsForClientProfile(int clientProfileID);
           string DeletePlacement(int id);
+
+        Placement GetPlacement(int id);
     }
 }
