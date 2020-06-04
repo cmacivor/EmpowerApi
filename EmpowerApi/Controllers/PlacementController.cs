@@ -113,7 +113,15 @@ namespace DJSCaseMgtService.Controllers
             return placement;
         }
 
+        [System.Web.Http.HttpGet, Route("GetPlacementsByClientProfileID/{id:int}")]
+        public List<Placement> GetPlacementsByClientProfileID(int id)
+        {
+            var placements = placementRepository.GetPlacementsForClientProfile(id).ToList();
 
+            return placements;
+        }
+
+        
 
         [System.Web.Http.HttpGet, Route("Deleteplacement/{id:int}")]
         public string Deleteplacement(int id)
