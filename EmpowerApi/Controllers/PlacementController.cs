@@ -54,7 +54,8 @@ namespace DJSCaseMgtService.Controllers
             return placementVM;
         }
 
-        [System.Web.Http.HttpPut, Route("{id:int}")]
+        //[System.Web.Http.HttpPut, Route("{id:int}")]
+        [System.Web.Http.HttpPut, Route("")]
         public async Task<object> Update(PlacementViewModel placementVM)
         {
             // Update Placement
@@ -75,18 +76,21 @@ namespace DJSCaseMgtService.Controllers
             }
             await placementOffenseRepository.Save();
 
-            // Add newly added PlacementOffenses
-            foreach (var po in placementVM.PlacementOffense)
+            if (placementVM.PlacementOffense != null && placementVM.PlacementOffense.Count() > 0)
             {
-                if (po.ID == 0)
+                // Add newly added PlacementOffenses
+                foreach (var po in placementVM.PlacementOffense)
                 {
-                    po.PlacementID = placementVM.Placement.ID;
+                    if (po.ID == 0)
+                    {
+                        po.PlacementID = placementVM.Placement.ID;
 
-                    placementOffenseRepository.Create(po);
-                    await placementOffenseRepository.Save();
+                        placementOffenseRepository.Create(po);
+                        await placementOffenseRepository.Save();
+                    }
                 }
             }
-
+      
             return placementVM;
         }
 
