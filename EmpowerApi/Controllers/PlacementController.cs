@@ -8,6 +8,8 @@ using DJSCaseMgtService.DataAccess.Repositories;
 using DJSCaseMgmtModel.Entities;
 using DJSCaseMgmtModel.ViewModels;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
+using Microsoft.Ajax.Utilities;
 
 namespace DJSCaseMgtService.Controllers
 {
@@ -35,23 +37,32 @@ namespace DJSCaseMgtService.Controllers
         [System.Web.Http.HttpPost, Route("")]
         public async Task<object> Create(PlacementViewModel placementVM)
         {
-            // Create new Placement
-            placementRepository.Create(placementVM.Placement);
-            var retVal = await placementRepository.Save();
-            //Commented because we dont need Offence in CWB.
-            //if(placementVM.Placement.ID != 0)
-            //{
-            //    // Create New PlacementOffenses
-            //    foreach(var po in placementVM.PlacementOffense)
-            //    {
-            //        po.PlacementID = placementVM.Placement.ID;
+            if (ModelState.IsValid)
+            {
+                // Create new Placement
+                placementRepository.Create(placementVM.Placement);
+                var retVal = await placementRepository.Save();
+                //Commented because we dont need Offence in CWB.
+                //if(placementVM.Placement.ID != 0)
+                //{
+                //    // Create New PlacementOffenses
+                //    foreach(var po in placementVM.PlacementOffense)
+                //    {
+                //        po.PlacementID = placementVM.Placement.ID;
 
-            //        placementOffenseRepository.Create(po);
-            //        await placementOffenseRepository.Save();
-            //    }
-            //}
+                //        placementOffenseRepository.Create(po);
+                //        await placementOffenseRepository.Save();
+                //    }
+                //}
 
-            return placementVM;
+                var placements = placementRepository.GetPlacementsForClientProfile(placementVM.Placement.ClientProfileID);
+
+                //return placementVM;
+                return placements;
+            }
+
+            return null;
+      
         }
 
         //[System.Web.Http.HttpPut, Route("{id:int}")]
