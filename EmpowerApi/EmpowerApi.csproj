@@ -244,6 +244,7 @@
     <Compile Include="Controllers\ServiceProgramCategoryController.cs" />
     <Compile Include="Controllers\ServiceProgramController.cs" />
     <Compile Include="Controllers\ServiceReleaseController.cs" />
+    <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\SubContactTypeController.cs" />
     <Compile Include="Controllers\SuffixController.cs" />
     <Compile Include="Controllers\UploadController.cs" />

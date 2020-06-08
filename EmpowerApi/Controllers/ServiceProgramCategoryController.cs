@@ -38,11 +38,11 @@ namespace EmpowerApi.Controllers
 
             IEnumerable<ServiceProgramCategoryView> retVal = new List<ServiceProgramCategoryView>();
 
-            string sql = @"Select sp.ID  as ServiceProgramID ,sp.Name as ServiceName,sc.Name as CategoryName, sc.ID as ServiceCategoryID
+            string sql = @"Select sp.ID  as ServiceProgramID ,sp.Name as ServiceName,sc.Name as CategoryName, sc.ID as ServiceCategoryID, spc.ID as ServiceProgramCategoryID
                from ServiceProgram sp,ServiceCategory sc,ServiceProgramCategory spc
                where sp.ID = spc.ServiceProgramID 
                and sc.ID = spc.ServiceCategoryID
-               and spc.Active = 1 and sc.SystemID = @systemID ORDER BY sp.Name";
+               and spc.Active = 1 and sc.SystemID = " + systemID + " ORDER BY sp.Name";
             
             //string sql = ServiceProgramCategorySearch;
 
