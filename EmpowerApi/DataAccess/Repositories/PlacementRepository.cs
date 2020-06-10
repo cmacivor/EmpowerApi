@@ -25,7 +25,7 @@ namespace DJSCaseMgtService.DataAccess.Repositories
         {
             var placements = (from p in context.Placement
                               where p.ClientProfileID == clientProfileID &&
-                              p.Active==true
+                              p.Active == true
                               select p).AsEnumerable();
 
             return placements;

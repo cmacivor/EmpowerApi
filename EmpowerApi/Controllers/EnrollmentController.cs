@@ -52,5 +52,13 @@ namespace DJSCaseMgtService.Controllers
 
             return enrollment.ID;
         }
+
+        [System.Web.Http.HttpGet, Route("GetEnrollment/{id:int}")]
+        public Enrollment GetEnrollment(int id)
+        {
+            var enrollment = context.Enrollment.FirstOrDefault(x => x.ID == id);
+
+            return enrollment;
+        }
     }
 }

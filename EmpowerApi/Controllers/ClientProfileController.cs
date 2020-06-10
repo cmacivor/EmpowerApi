@@ -107,6 +107,14 @@ namespace EmpowerApi.Controllers
 
         }
 
+        [System.Web.Http.HttpGet, Route("GetPlacementsByClientProfileId/{id:int}")]
+        public IEnumerable<PlacementViewModel> GetPlacementsByClientProfileId(int id)
+        {
+            var placements = GetPlacementsForClientProfile(id);
+
+            return placements;
+        }
+
 
         private IEnumerable<PlacementViewModel> GetPlacementsForClientProfile(int clientProfileID)
         {
