@@ -212,6 +212,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\ActionPlanController.cs" />
     <Compile Include="Controllers\AddressTypeController.cs" />
     <Compile Include="Controllers\AssessmentSubTypeController.cs" />
     <Compile Include="Controllers\AssessmentTypeController.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="Controllers\ContactTypeController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EducationLevelController.cs" />
+    <Compile Include="Controllers\EmploymentPlanController.cs" />
     <Compile Include="Controllers\EnrollmentController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FamilyProfileController.cs" />
