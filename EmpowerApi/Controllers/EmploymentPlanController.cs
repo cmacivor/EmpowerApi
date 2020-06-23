@@ -53,5 +53,13 @@ namespace DJSCaseMgtService.Controllers
 
         }
 
+        [System.Web.Http.HttpGet, Route("GetEmploymentPlan/{id:int}")]
+        public EmploymentPlan GetEmploymentPlan(int id)
+        {
+            var employmentPlan = context.EmploymentPlan.FirstOrDefault(x => x.EnrollmentID == id);
+
+            return employmentPlan;
+        }
+
     }
 }
