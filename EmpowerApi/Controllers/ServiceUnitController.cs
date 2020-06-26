@@ -28,10 +28,12 @@ namespace DJSCaseMgtService.Controllers
         [System.Web.Http.HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
+            int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
+
             IEnumerable<ServiceUnit> output = null;
             if (ModelState.IsValid)
             {
-                output = context.ServiceUnit.Where(x => x.Active == true && x.SystemID == 2).ToList();
+                output = context.ServiceUnit.Where(x => x.Active == true && x.SystemID == systemID).ToList();
             }
 
             return Ok(output);
