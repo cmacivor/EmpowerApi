@@ -23,12 +23,12 @@ namespace DJSCaseMgtService.Controllers
         [System.Web.Http.HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
-            int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
+            //int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
 
             IEnumerable<SubContactType> output = null;
             if (ModelState.IsValid)
             {
-                output = context.SubContactType.OrderBy(x => x.Name).Where(x => x.Active == true && x.SystemID == systemID).ToList();
+                output = context.SubContactType.OrderBy(x => x.Name).Where(x => x.Active == true).ToList();
             }
 
             return Ok(output);
