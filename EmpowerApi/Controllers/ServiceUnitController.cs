@@ -39,12 +39,19 @@ namespace DJSCaseMgtService.Controllers
             return Ok(output);
         }
 
+        [System.Web.Http.HttpGet, Route("GetByEnrollmentID/{id:int}")]
+        public IHttpActionResult GetByEnrollmentID(int id)
+        {
+            int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
+
+            var serviceUnits = context.ServiceUnit.Where(x => x.Active == true && x.SystemID == systemID && x.EnrollmentID == id);
+
+            return Ok(serviceUnits);
+        }
+
         [System.Web.Http.HttpPut, Route("UpdateServiceUnit/{id:int}")]
         public int UpdateServiceUnit(ServiceUnit serviceUnit)
         {
-
-
-
             var original = context.ServiceUnit.Find(serviceUnit.ID);
             try
             {
