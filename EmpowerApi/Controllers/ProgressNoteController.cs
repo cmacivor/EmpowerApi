@@ -44,5 +44,13 @@ namespace DJSCaseMgtService.Controllers
 
         }
 
+        [System.Web.Http.HttpGet, Route("GetByEnrollmentID/{id:int}")]
+        public IHttpActionResult GetByEnrollmentID(int id)
+        {
+            var progressNotes = context.ProgressNote.Where(x => x.Active == true && x.EnrollmentID == id);
+
+            return Ok(progressNotes);
+        }
+
     }
 }
