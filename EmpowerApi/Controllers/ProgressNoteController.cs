@@ -52,5 +52,37 @@ namespace DJSCaseMgtService.Controllers
             return Ok(progressNotes);
         }
 
+        [System.Web.Http.HttpGet, Route("GetByID/{id:int}")]
+        public IHttpActionResult GetById(int id)
+        {
+            var progressNote = context.ProgressNote.FirstOrDefault(x => x.ID == id);
+
+            if (progressNote != null)
+            {
+                return Ok(progressNote);
+            }
+            return null;
+        }
+
+        [System.Web.Http.HttpGet, Route("Delete/{id:int}")]
+        public IHttpActionResult Delete(int id)
+        {
+            var progressNote = context.ProgressNote.FirstOrDefault(x => x.ID == id);
+
+            if (progressNote != null)
+            {
+                progressNote.Active = false;
+            }
+            try
+            {
+                var recordsUpdated = context.SaveChanges();
+                return Ok(recordsUpdated);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
     }
 }

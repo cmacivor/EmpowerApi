@@ -49,6 +49,14 @@ namespace DJSCaseMgtService.Controllers
             return Ok(serviceUnits);
         }
 
+        [System.Web.Http.HttpGet, Route("GetByID/{id:int}")]
+        public IHttpActionResult GetById(int id)
+        {
+            var serviceUnit = context.ServiceUnit.FirstOrDefault(x => x.ID == id);
+
+            return Ok(serviceUnit);
+        }
+
         [System.Web.Http.HttpPut, Route("UpdateServiceUnit/{id:int}")]
         public int UpdateServiceUnit(ServiceUnit serviceUnit)
         {
