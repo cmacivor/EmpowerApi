@@ -237,6 +237,7 @@
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\PersonSupplementalController.cs" />
     <Compile Include="Controllers\PlacementController.cs" />
+    <Compile Include="Controllers\PlacementLevelController.cs" />
     <Compile Include="Controllers\ProgressNoteController.cs" />
     <Compile Include="Controllers\PropertyTypeController.cs" />
     <Compile Include="Controllers\RaceController.cs" />
