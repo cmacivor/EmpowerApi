@@ -40,25 +40,28 @@ namespace DJSCaseMgtService.Controllers
             if (ModelState.IsValid)
             {
                 // Create new Placement
-                placementRepository.Create(placementVM.Placement);
+                var createdPlacement = placementRepository.Create(placementVM.Placement);
                 var retVal = await placementRepository.Save();
-                //Commented because we dont need Offence in CWB.
-                //if(placementVM.Placement.ID != 0)
+
+                //note: there are not PlacementOffenses in CWB
+                //if (placementVM.PlacementOffense != null && placementVM.PlacementOffense.Count() > 0)
                 //{
                 //    // Create New PlacementOffenses
-                //    foreach(var po in placementVM.PlacementOffense)
+                //    foreach (var po in placementVM.PlacementOffense)
                 //    {
-                //        po.PlacementID = placementVM.Placement.ID;
+                //        po.PlacementID = createdPlacement.ID; //placementVM.Placement.ID;
 
                 //        placementOffenseRepository.Create(po);
                 //        await placementOffenseRepository.Save();
                 //    }
                 //}
 
-                var placements = placementRepository.GetPlacementsForClientProfile(placementVM.Placement.ClientProfileID);
+                //var placements = placementRepository.GetPlacementsForClientProfile(placementVM.Placement.ClientProfileID);
 
                 //return placementVM;
-                return placements;
+                //return placements;
+
+                return createdPlacement;
             }
 
             return null;
