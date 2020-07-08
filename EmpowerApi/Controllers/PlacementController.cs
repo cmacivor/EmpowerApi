@@ -72,40 +72,44 @@ namespace DJSCaseMgtService.Controllers
         [System.Web.Http.HttpPut, Route("")]
         public async Task<object> Update(PlacementViewModel placementVM)
         {
-            // Update Placement
-            placementRepository.Update(placementVM.Placement);
-            var retVal = await placementRepository.Save();
-
-            // Get all existing PlacementOffenses for Placement
-            var existingPlacementOffenses = placementOffenseRepository.GetPlacementOffensesForPlacement(placementVM.Placement.ID);
-
-            // Find the Deleted offenses                        
-            var deletedOffenses = existingPlacementOffenses.Where
-                                  (ep => placementVM.PlacementOffense.All(cp => cp.ID != ep.ID));
-
-            // Delete removed offenses
-            foreach (var delO in deletedOffenses)
+            if (ModelState.IsValid)
             {
-                placementOffenseRepository.Delete(delO);
-            }
-            await placementOffenseRepository.Save();
+                // Update Placement
+                placementRepository.Update(placementVM.Placement);
+                var retVal = await placementRepository.Save();
 
-            if (placementVM.PlacementOffense != null && placementVM.PlacementOffense.Count() > 0)
-            {
-                // Add newly added PlacementOffenses
-                foreach (var po in placementVM.PlacementOffense)
-                {
-                    if (po.ID == 0)
-                    {
-                        po.PlacementID = placementVM.Placement.ID;
+                // Get all existing PlacementOffenses for Placement
+                //var existingPlacementOffenses = placementOffenseRepository.GetPlacementOffensesForPlacement(placementVM.Placement.ID);
 
-                        placementOffenseRepository.Create(po);
-                        await placementOffenseRepository.Save();
-                    }
-                }
+                //// Find the Deleted offenses                        
+                //var deletedOffenses = existingPlacementOffenses.Where
+                //                      (ep => placementVM.PlacementOffense.All(cp => cp.ID != ep.ID));
+
+                //// Delete removed offenses
+                //foreach (var delO in deletedOffenses)
+                //{
+                //    placementOffenseRepository.Delete(delO);
+                //}
+                //await placementOffenseRepository.Save();
+
+                //if (placementVM.PlacementOffense != null && placementVM.PlacementOffense.Count() > 0)
+                //{
+                //    // Add newly added PlacementOffenses
+                //    foreach (var po in placementVM.PlacementOffense)
+                //    {
+                //        if (po.ID == 0)
+                //        {
+                //            po.PlacementID = placementVM.Placement.ID;
+
+                //            placementOffenseRepository.Create(po);
+                //            await placementOffenseRepository.Save();
+                //        }
+                //    }
+                //}
+
+                return placementVM;
             }
-      
-            return placementVM;
+            return null;
         }
 
         [System.Web.Http.HttpGet, Route("GetPlacement/{id:int}")]
