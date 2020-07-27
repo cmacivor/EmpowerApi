@@ -214,6 +214,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ActionPlanController.cs" />
     <Compile Include="Controllers\AddressTypeController.cs" />
+    <Compile Include="Controllers\AssessmentController.cs" />
     <Compile Include="Controllers\AssessmentSubTypeController.cs" />
     <Compile Include="Controllers\AssessmentTypeController.cs" />
     <Compile Include="Controllers\AssistanceTypeController.cs" />
