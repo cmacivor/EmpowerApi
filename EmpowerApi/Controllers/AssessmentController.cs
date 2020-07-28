@@ -30,6 +30,14 @@ namespace DJSCaseMgtService.Controllers
 
             return assessments;
         }
+
+        [System.Web.Http.HttpGet, System.Web.Http.Route("GetAssessment/{id:int}")]
+        public Assessment GetAssessment(int id)
+        {
+            var assessment = assessmentRepository.GetAssessment(id);
+
+            return assessment;
+        }
     }
 
 
