@@ -23,10 +23,21 @@ namespace EmpowerApi.Controllers
             IEnumerable<Offense> output = null;
             if (ModelState.IsValid)
             {
-                output = context.Offense.Where(x => x.Active == true).ToList();
+                var offenses = new List<Offense>();
+
+                offenses = GetCachedItems();
+
+                if (offenses == null || offenses.Count() == 0)
+                {
+                    offenses = context.Offense.Where(x => x.Active == true).ToList();
+
+                    SetCachedItems(offenses);
+                }
+
+                return Ok(offenses);
             }
 
-            return Ok(output);
+            return null;
         }
 
         [System.Web.Http.HttpGet, Route("Delete/{id:int}")]

@@ -32,13 +32,23 @@ namespace DJSCaseMgtService.Controllers
         {
             int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
 
-            IEnumerable<Judge> output = null;
             if (ModelState.IsValid)
             {
-                output = context.Judge.Where(x => x.Active == true && x.SystemID == systemID).OrderBy(x => x.Name).ToList();
+                var judges = new List<Judge>();
+
+                judges = GetCachedItems();
+
+                if (judges == null || judges.Count() == 0)
+                {
+                    judges = context.Judge.Where(x => x.Active == true && x.SystemID == systemID).OrderBy(x => x.Name).ToList();
+
+                    SetCachedItems(judges);
+                }
+
+                return Ok(judges);
             }
 
-            return Ok(output);
+            return null;
         }
 
 

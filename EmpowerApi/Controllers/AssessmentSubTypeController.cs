@@ -25,13 +25,23 @@ namespace EmpowerApi.Controllers
         {
             int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
 
-            IEnumerable<AssessmentSubtype> output = null;
             if (ModelState.IsValid)
             {
-                output = context.AssessmentSubtype.Where(x => x.Active == true && x.SystemID == systemID).ToList();
+                var assessmentSubtypes = new List<AssessmentSubtype>();
+
+                assessmentSubtypes = GetCachedItems();
+
+                if (assessmentSubtypes == null || assessmentSubtypes.Count() == 0)
+                {
+                    assessmentSubtypes = context.AssessmentSubtype.Where(x => x.Active == true && x.SystemID == systemID).ToList();
+
+                    SetCachedItems(assessmentSubtypes);
+                }
+
+                return Ok(assessmentSubtypes);
             }
 
-            return Ok(output);
+            return null;
         }
 
         [HttpGet, Route("Delete/{id:int}")]

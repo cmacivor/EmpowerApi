@@ -25,13 +25,24 @@ namespace DJSCaseMgtService.Controllers
         {
             int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
 
-            IEnumerable<PlacementLevel> output = null;
             if (ModelState.IsValid)
             {
-                output = context.PlacementLevel.Where(x => x.Active == true && x.SystemID == systemID).OrderBy(x => x.Name).ToList();
+                var placementLevels = new List<PlacementLevel>();
+
+                placementLevels = GetCachedItems();
+
+                if (placementLevels == null || placementLevels.Count() == 0)
+                {
+                    placementLevels = context.PlacementLevel.Where(x => x.Active == true && x.SystemID == systemID).OrderBy(x => x.Name).ToList();
+
+                    SetCachedItems(placementLevels);
+                }
+
+                return Ok(placementLevels);
+
             }
 
-            return Ok(output);
+            return null;
         }
     }
 }

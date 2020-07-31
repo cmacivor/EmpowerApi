@@ -25,13 +25,23 @@ namespace EmpowerApi.Controllers
         {
             int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
 
-            IEnumerable<ServiceRelease> output = null;
             if (ModelState.IsValid)
             {
-                output = context.ServiceRelease.Where(x => x.Active == true && x.SystemID == systemID).ToList();
+                var serviceReleases = new List<ServiceRelease>();
+
+                serviceReleases = GetCachedItems();
+
+                if (serviceReleases == null || serviceReleases.Count() == 0)
+                {
+                    serviceReleases = context.ServiceRelease.Where(x => x.Active == true && x.SystemID == systemID).ToList();
+
+                    SetCachedItems(serviceReleases);
+                }
+
+                return Ok(serviceReleases);
             }
 
-            return Ok(output);
+            return null;
         }
 
 

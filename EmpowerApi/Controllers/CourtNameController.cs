@@ -31,13 +31,24 @@ namespace DJSCaseMgtService.Controllers
         public IHttpActionResult GetAll()
         {
             int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
-            IEnumerable<CourtName> output = null;
+            
             if (ModelState.IsValid)
             {
-                output = context.CourtName.Where(x => x.Active == true && x.SystemID == systemID).OrderBy(x => x.Name).ToList();
+                var courtNames = new List<CourtName>();
+
+                courtNames = GetCachedItems();
+
+                if (courtNames == null || courtNames.Count() == 0)
+                {
+                    courtNames = context.CourtName.Where(x => x.Active == true && x.SystemID == systemID).OrderBy(x => x.Name).ToList();
+
+                    SetCachedItems(courtNames);
+                }
+                return Ok(courtNames);
+
             }
 
-            return Ok(output);
+            return null;
         }
 
 

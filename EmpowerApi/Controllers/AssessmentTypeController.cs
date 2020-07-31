@@ -23,13 +23,24 @@ namespace EmpowerApi.Controllers
         {            
             int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
 
-            IEnumerable<AssessmentType> output = null;
             if (ModelState.IsValid)
             {
-                output = context.AssessmentType.Where(x => x.Active == true && x.SystemID == systemID).ToList();
+                var assessmentTypes = new List<AssessmentType>();
+
+                assessmentTypes = GetCachedItems();
+
+                if (assessmentTypes == null || assessmentTypes.Count() == 0)
+                {
+                    assessmentTypes = context.AssessmentType.Where(x => x.Active == true && x.SystemID == systemID).ToList();
+
+                    SetCachedItems(assessmentTypes);
+                }
+
+                return Ok(assessmentTypes);
+
             }
 
-            return Ok(output);
+            return null;
         }
 
 
