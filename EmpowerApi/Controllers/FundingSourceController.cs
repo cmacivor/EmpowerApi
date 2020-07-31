@@ -21,13 +21,24 @@ namespace EmpowerApi.Controllers
         [System.Web.Http.HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
-            IEnumerable<FundingSource> output = null;
             if (ModelState.IsValid)
             {
-                output = context.FundingSource.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+                var fundingSources = new List<FundingSource>();
+
+                fundingSources = GetCachedItems();
+
+                if (fundingSources == null || fundingSources.Count() == 0)
+                {
+                    fundingSources = context.FundingSource.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+
+                    SetCachedItems(fundingSources);
+                }
+
+                return Ok(fundingSources);
             }
 
-            return Ok(output);
+            return null;
+
         }
 
         [System.Web.Http.HttpGet, Route("Delete/{id:int}")]

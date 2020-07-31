@@ -22,13 +22,24 @@ namespace EmpowerApi.Controllers
         [HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
-            IEnumerable<Suffix> output = null;
             if (ModelState.IsValid)
             {
-                output = context.Suffix.Where(x => x.Active == true).ToList();
+                var suffixes = new List<Suffix>();
+   
+                suffixes = GetCachedItems();
+
+                if (suffixes == null || suffixes.Count() == 0)
+                {
+                    suffixes = context.Suffix.Where(x => x.Active == true).ToList();
+
+                    SetCachedItems(suffixes);
+                }
+
+                return Ok(suffixes);
             }
 
-            return Ok(output);
+
+            return null;
         }
 
 
