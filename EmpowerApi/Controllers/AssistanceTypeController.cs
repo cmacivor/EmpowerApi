@@ -22,13 +22,23 @@ namespace EmpowerApi.Controllers
         [HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
-            IEnumerable<AssistanceType> output = null;
             if (ModelState.IsValid)
             {
-                output = context.AssistanceType.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+                var assistanceTypes = new List<AssistanceType>();
+
+                assistanceTypes = GetCachedItems();
+
+                if (assistanceTypes == null || assistanceTypes.Count() == 0)
+                {
+                    assistanceTypes = context.AssistanceType.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+
+                    SetCachedItems(assistanceTypes);
+                }
+
+                return Ok(assistanceTypes);
             }
 
-            return Ok(output);
+            return null;
         }
 
 

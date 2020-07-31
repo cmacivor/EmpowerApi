@@ -23,15 +23,25 @@ namespace DJSCaseMgtService.Controllers
         [System.Web.Http.HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
-            //int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
 
             IEnumerable<SubContactType> output = null;
             if (ModelState.IsValid)
             {
-                output = context.SubContactType.OrderBy(x => x.Name).Where(x => x.Active == true).ToList();
+                var subContactTypes = new List<SubContactType>();
+
+                subContactTypes = GetCachedItems();
+
+                if (subContactTypes == null || subContactTypes.Count() == 0)
+                {
+                    subContactTypes = context.SubContactType.OrderBy(x => x.Name).Where(x => x.Active == true).ToList();
+
+                    SetCachedItems(subContactTypes);
+                }
+
+                return Ok(subContactTypes);
             }
 
-            return Ok(output);
+            return null;
         }
         [System.Web.Http.HttpGet, Route("Delete/{id:int}")]
         public IHttpActionResult Delete(int id)

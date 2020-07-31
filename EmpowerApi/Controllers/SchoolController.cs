@@ -28,13 +28,23 @@ namespace DJSCaseMgtService.Controllers
         [System.Web.Http.HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
-            IEnumerable<School> output = null;
             if (ModelState.IsValid)
             {
-                output = context.School.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+                var schools = new List<School>();
+
+                schools = GetCachedItems();
+
+                if (schools == null || schools.Count() == 0)
+                {
+                    schools = context.School.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+
+                    SetCachedItems(schools);
+                }
+
+                return Ok(schools);
             }
 
-            return Ok(output);
+            return null;
         }
 
 

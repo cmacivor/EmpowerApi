@@ -20,13 +20,23 @@ namespace EmpowerApi.Controllers
         [HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
-            IEnumerable<CareerPathway> output = null;
             if (ModelState.IsValid)
             {
-                output = context.CareerPathway.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+                var careerPathways = new List<CareerPathway>();
+
+                careerPathways = GetCachedItems();
+
+                if (careerPathways == null || careerPathways.Count() == 0)
+                {
+                    careerPathways = context.CareerPathway.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+
+                    SetCachedItems(careerPathways);
+                }
+
+                return Ok(careerPathways);
             }
 
-            return Ok(output);
+            return null;
         }
 
         [HttpGet, Route("Delete/{id:int}")]
