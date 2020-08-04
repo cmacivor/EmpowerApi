@@ -20,13 +20,23 @@ namespace EmpowerApi.Controllers
         [System.Web.Http.HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
-            IEnumerable<PropertyType> output = null;
             if (ModelState.IsValid)
             {
-                output = context.PropertyType.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+                var propertyTypes = new List<PropertyType>();
+
+                propertyTypes = GetCachedItems();
+
+                if (propertyTypes == null || propertyTypes.Count() == 0)
+                {
+                    propertyTypes = context.PropertyType.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+
+                    SetCachedItems(propertyTypes);
+                }
+
+                return Ok(propertyTypes);
             }
 
-            return Ok(output);
+            return null;
         }
 
         [System.Web.Http.HttpGet, Route("Delete/{id:int}")]

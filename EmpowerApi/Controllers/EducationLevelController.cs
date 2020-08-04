@@ -20,13 +20,22 @@ namespace EmpowerApi.Controllers
         [System.Web.Http.HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
-            IEnumerable<EducationLevel> output = null;
             if (ModelState.IsValid)
             {
-                output = context.EducationLevel.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+                var educationLevels = new List<EducationLevel>();
+
+                educationLevels = GetCachedItems();
+
+                if (educationLevels == null || educationLevels.Count() == 0)
+                {
+                    educationLevels = context.EducationLevel.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+
+                    SetCachedItems(educationLevels);
+                }
+                return Ok(educationLevels);
             }
 
-            return Ok(output);
+            return null;
         }
 
 

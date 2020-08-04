@@ -23,13 +23,23 @@ namespace DJSCaseMgtService.Controllers
         {
             int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
 
-            IEnumerable<Staff> output = null;
             if (ModelState.IsValid)
             {
-                output = context.Staff.Where(x => x.Active == true && x.SystemID == systemID).ToList();
+                var staff = new List<Staff>();
+
+                staff = GetCachedItems();
+
+                if (staff == null || staff.Count() == 0)
+                {
+                    staff = context.Staff.Where(x => x.Active == true && x.SystemID == systemID).ToList();
+
+                    SetCachedItems(staff);
+                }
+
+                return Ok(staff);
             }
 
-            return Ok(output);
+            return null;
         }
         #endregion
     }

@@ -22,13 +22,23 @@ namespace EmpowerApi.Controllers
         [HttpGet, Route("GetAll")]
         public IHttpActionResult GetAll()
         {
-            IEnumerable<Race> output = null;
             if (ModelState.IsValid)
             {
-                output = context.Race.Where(x => x.Active == true).ToList();
+                var races = new List<Race>();
+
+                races = GetCachedItems();
+
+                if (races == null || races.Count() == 0)
+                {
+                    races = context.Race.Where(x => x.Active == true).ToList();
+
+                    SetCachedItems(races);
+                }
+
+                return Ok(races);
             }
 
-            return Ok(output);
+            return null;
         }
 
         [HttpGet, Route("Delete/{id:int}")]

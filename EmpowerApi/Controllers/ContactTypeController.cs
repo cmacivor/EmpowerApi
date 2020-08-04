@@ -24,13 +24,23 @@ namespace EmpowerApi.Controllers
         {
             int systemID = base.authRepository.GetSystemIDByLoggedInUserRole();
 
-            IEnumerable<ContactType> output = null;
             if (ModelState.IsValid)
             {
-                output = context.ContactType.OrderBy(x => x.Name).Where(x => x.Active == true && x.SystemID == systemID).ToList();
+                var contactTypes = new List<ContactType>();
+
+                contactTypes = GetCachedItems();
+
+                if (contactTypes == null || contactTypes.Count() == 0)
+                {
+                    contactTypes = context.ContactType.OrderBy(x => x.Name).Where(x => x.Active == true && x.SystemID == systemID).ToList();
+
+                    SetCachedItems(contactTypes);
+                }
+
+                return Ok(contactTypes);
             }
 
-            return Ok(output);
+            return null;
         }
 
         [HttpGet, Route("Delete/{id:int}")]

@@ -56,7 +56,14 @@ namespace DJSCaseMgtService.DataAccess.Repositories
             }
             return output;
         }
-}
+
+        public Assessment GetAssessment(int id)
+        {
+            var assessment = context.Assessment.FirstOrDefault(x => x.ID == id);
+
+            return assessment;
+        }
+    }
 
     public interface IAssessmentRepository
     {
@@ -64,6 +71,7 @@ namespace DJSCaseMgtService.DataAccess.Repositories
 
        string DeleteAssessment(int id);
 
+        Assessment GetAssessment(int id);
        
     }
 }
