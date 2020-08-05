@@ -20,7 +20,8 @@ using System.Web.Http;
 using DJSCaseMgtService;
 using DJSCaseMgtService.Models;
 using DJSCaseMgtService.oAuth;
-
+using System.Runtime.InteropServices;
+using System.Web.Helpers;
 
 namespace DJSCaseMgtService.Controllers
 {
@@ -31,6 +32,7 @@ namespace DJSCaseMgtService.Controllers
         private AuthRepository _repo = null;
         private AuthContext _ctx = null;
         private UserManager<IdentityUser> _userManager;
+        private RoleManager<IdentityRole> _roleManager;
         private DJSCaseMgtContext context = new DJSCaseMgtContext();
 
 
@@ -44,26 +46,28 @@ namespace DJSCaseMgtService.Controllers
             _repo = new AuthRepository();
             _ctx = new AuthContext();
             _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
+            _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_ctx));
+
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
-        [Route("Reset")]
-        public async Task<IHttpActionResult> reset(string name, string NewPassword)
+        //[AllowAnonymous]
+        [HttpPost, Route("Reset")]
+        public async Task<IHttpActionResult> reset(ResetPassword resetPassword)
         {
-            IdentityUser user = _userManager.FindByName(name);
+            IdentityUser user = _userManager.FindByName(resetPassword.name);
             string Id = user.Id;
             _userManager.RemovePassword(Id);
 
-            _userManager.AddPassword(Id, NewPassword);
+            _userManager.AddPassword(Id, resetPassword.NewPassword);
             return Ok();
 
         }
 
         // remove the user
 
-        [AllowAnonymous]
-        [Route("Remove")]
+        //[AllowAnonymous]
+        [HttpGet, Route("Remove")]
         public async Task<IHttpActionResult> Remove(string name)
         {
             IdentityUser user = _userManager.FindByName(name);
@@ -76,7 +80,7 @@ namespace DJSCaseMgtService.Controllers
 
         //reset the password
         [AllowAnonymous]
-        [Route("Register")]
+        [HttpPost, Route("Register")]
         public async Task<IHttpActionResult> Register(UserModel LoginModel)
         {
             // IdentityUser userde = AuthRepository.UserDetails.userdetail;
@@ -91,7 +95,9 @@ namespace DJSCaseMgtService.Controllers
 
             if (errorResult != null)
             {
+                //return BadRequest(errorResult);
                 return errorResult;
+                //return Json(errorResult);
             }
 
             return Ok();
@@ -160,31 +166,36 @@ namespace DJSCaseMgtService.Controllers
 
         [System.Web.Http.HttpGet, Route("getuser")]
 
-        public async Task<IList<string>> UserRoles()
+        public async Task<IList<IdentityRole>> UserRoles()
         {
             string userId = User.Identity.Name;
             var user = await _userManager.FindByNameAsync(userId);
             var userIdw = user.Id;
 
+            var users = _userManager.Users.ToList();
+
+            var allRoles = _roleManager.Roles.ToList();
 
 
-            IList<string> roles = await _userManager.GetRolesAsync(userIdw);
+            return allRoles;
+            //IList<string> roles = await _userManager.GetRolesAsync(userIdw);
 
-            return roles;
+            //return roles;
 
         }
 
-
-        public async Task<IList<string>> UserRoles(string UserName)
+        [System.Web.Http.HttpGet, Route("UserRoles/{id:int}")]
+        public async Task<IList<string>> UserRoles(string id)
         {
             string userId = User.Identity.Name;
-            var user = await _userManager.FindByNameAsync(UserName);
+            var user = await _userManager.FindByNameAsync(id);
             var userIdw = user.Id;
 
 
 
             IList<string> roles = await _userManager.GetRolesAsync(userIdw);
 
+            
             return roles;
 
         }
@@ -567,6 +578,13 @@ namespace DJSCaseMgtService.Controllers
                     ExternalAccessToken = identity.FindFirstValue("ExternalAccessToken"),
                 };
             }
+        }
+
+        public class ResetPassword
+        {
+            public string name { get; set; }
+
+            public string NewPassword { get; set; }
         }
 
         #endregion
