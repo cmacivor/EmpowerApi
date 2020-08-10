@@ -99,7 +99,7 @@ namespace EmpowerApi.Controllers
             var cacheItemName = typeof(T).ToString();
 
             var policy = new CacheItemPolicy();
-            policy.AbsoluteExpiration.Add(TimeSpan.FromMinutes(30));
+            policy.AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30); 
 
             var cacheItem = new CacheItem(cacheItemName, items);
 
